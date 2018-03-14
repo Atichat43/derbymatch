@@ -9,7 +9,6 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   source(file.path("server", "server.R"),  local = TRUE)$value
-  mainPanel(input$playerslist)
 }
 
 
