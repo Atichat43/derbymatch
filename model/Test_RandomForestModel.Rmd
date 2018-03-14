@@ -1,0 +1,117 @@
+---
+title: "Test_RandomForestModel"
+output: html_notebook
+---
+```{r}
+library(randomForest)
+```
+
+Because the process has the two sources of randomness that we discussed earlier, it is a good idea to set the random seed in R before you begin. This makes your results reproducible next time you load the code up, otherwise you can get different classifications for each run.
+```{r}
+set.seed(415)
+```
+The number inside isn’t important, you just need to ensure you use the same seed number each time so that the same random numbers are generated inside the Random Forest function.
+
+*Random Forest*
+tuning parameter: mtry(Randomly Selected Predictors)
+```{r}
+randomForest_model <- randomForest(result ~.,
+                      data=training_set, 
+                      importance=TRUE, 
+                      ntree=500
+                      )
+randomForest_model
+```
+** ใช้ได้**
+
+```{r}
+rf <- train(train_data, train_result, "rf"
+          ,trueLength = 2
+          ,trControl = trainControl(method="cv", indexOut = flods)
+          )
+rf
+rf$finalModel
+```
+
+
+##############################################################################
+
+```{r}
+randomForest_model <- randomForest(result ~ team.home + away.team + home.goals + away.goals,
+                      data=training_set, 
+                      importance=TRUE, 
+                      ntree=500
+                      )
+randomForest_model
+```
+**NOT WORK**
+อันนี้เราใส่score เข้าไปมันก็รู้สิ
+
+
+##############################################################################
+
+
+```{r}
+rF_team <- randomForest(result ~ team.home + away.team + home.goals + away.goals +
+                          gk + H_player.2 + H_player.3 + H_player.4 + H_player.5 + H_player.6 + 
+                          H_player.7 + H_player.8 + H_player.9 + H_player.10 + H_player.11 + 
+                          gk.1 + A_player.2 + A_player.3 + A_player.4 + A_player.5 + A_player.6 +
+                          A_player.7 + A_player.8 + A_player.9 + A_player.10 + A_player.11,
+                        data=training_set, 
+                        importance=TRUE, 
+                        ntree=500
+                        )
+rF_team
+```
+one column has 165 levels.
+
+*Switch to another algorithm*, for instance gradient boosting from *gbm package.* You can handle up to 1024 categorical levels. If your predictor has quite discriminant parameters, you should also consider probabilistic approaches such as **naiveBayes**.
+
+*Transform your predictor into dummy variables*, which can be done by using matrix. model. You can then perform a random forest over this matrix.
+
+*Reduce the number of levels in your factor*. Ok, that may sound like a silly advice, but is it really relevant to look at factors with such "thinness" ? Is it possible for you to aggregate some modalities at a broader level ?
+##############################################################################
+
+
+```{r}
+rf <- train(training_set[, -7], training_set[, 7], "rf"
+          ,trueLength = 3
+          ,trControl = trainControl(method="cv", indexOut = flods)
+          )
+rfte
+rf$finalModel
+```
+มันทำไม่เสร็จ accuracy มันเลย calculate ไม่ได้
+
+##############################################################################
+
+http://trevorstephens.com/kaggle-titanic-tutorial/r-part-5-random-forests/
+```{r}
+varImpPlot(randomForest_model)
+```
+
+
+** Testing Model **
+```{r}
+accuracy(test_result, predict(randomForest_model, test_data))
+```
+
+
+
+** TESTING MODEL **
+```{r}
+k <- 10
+index <- 1:nrow(dataset)
+index <- sample(index)
+fold <- rep(1:k, each=nrow(dataset)/k)[1:nrow(dataset)]
+folds <- split(index, fold)
+
+#Do each fold
+accs <- vector(mode = "numeric")
+for(i in 1:length(folds)){
+  model <- randomForest(result ~., data=dataset[-folds[[i]], ], importance=TRUE, ntree=500)
+  accs[i] <- accuracy(dataset[fold[[i]], ]$result, predict(model, dataset[fold[[i]], ]))
+}
+accs
+```
+

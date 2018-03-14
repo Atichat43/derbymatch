@@ -1,0 +1,22 @@
+---
+title: "Test_FURIA"
+output: html_notebook
+---
+
+```{r}
+library(RKEEL)
+help("FURIA_C")
+```
+
+FURIA_C(train, test, optimizations, folds, seed)
+```{r}
+furia_c_model <- FURIA_C(training_set, test_set)
+furia_c_model$run()
+pd <- furia_c_model$testPredictions
+```
+
+check result
+```{r}
+table(pd)
+```
+

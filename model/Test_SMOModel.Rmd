@@ -1,0 +1,26 @@
+---
+title: "Test_SMOModel"
+output: html_notebook
+---
+
+Weka_classifier_functions {RWeka}
+```{r}
+library(RWeka) # SMO
+```
+
+SMO_C {RKEEL}
+```{r}
+library(RKEEL)
+help(SMO_C)
+```
+
+```{r}
+smo_c_model <- SMO_C(training_set, test_set)
+smo_c_model$run()
+pd <- smo_c_model$testPredictions
+```
+
+```{r}
+table(pd)
+```
+
