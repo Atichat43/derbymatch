@@ -31,8 +31,8 @@ seperateDataset <- function(datasets) {
   return(datasets)
 }
 
-preparingData <- function(filenames="dataset_numeric.csv") {
-  datasets <- read.csv(file.path("datasets", "dataset_numeric.csv"))
+preparingData <- function(filename="dataset_numeric.csv") {
+  datasets <- read.csv(file.path("datasets", filename))
   datasets <- seperateDataset(datasets)
 }
 

@@ -30,3 +30,15 @@ accuracy <- function(table){
   return((table[1] + table[5] + table[9])/sum(table[1:9]))
 }
 
+randomTestCase <- function(){
+  testCase <- read.csv(file.path("datasets", "dataset_numeric.csv"))
+  testCase <- testCase[sample(2000:2270, 1),1:length(names(testCase))-1]
+  return(testCase)
+}
+
+predictNextMatch <- function(testCase){
+  pd <- predict(model, testCase)
+  output <- "output"
+  return(output)
+}
+
