@@ -1,5 +1,6 @@
 source("init.R")
 source(file.path("functions", "functions.R"))
+player <- read.csv(file.path("datasets", "ManU_player.csv"))
 
 ui <- fluidPage(
   # source(file.path("ui", "title.R"),  local = TRUE)$value,

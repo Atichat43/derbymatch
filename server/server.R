@@ -64,7 +64,6 @@ server <- function(input, output) {
   observeEvent(input$ok, {
     vals$data <- ({input$dataset})
     removeModal()
-    
   })
   
   # Display information about selected data
