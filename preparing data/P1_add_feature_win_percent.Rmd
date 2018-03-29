@@ -1,0 +1,215 @@
+---
+title: "Preparing data: add feature win percent last match before"
+---
+ [1] "id"                               "date_match"                      
+ [3] "season"                           "away_team_api_id"                
+ [5] "home_team_api_id"                 "away_team_goal"                  
+ [7] "home_team_goal"                   "H_overall_rating"                
+ [9] "A_overall_rating"                 "H_potential"                     
+[11] "A_potential"                      "H_buildUpPlaySpeed"              
+[13] "H_buildUpPlaySpeedClass"          "H_buildUpPlayDribblingClass"     
+[15] "H_buildUpPlayPassing"             "H_buildUpPlayPassingClass"       
+[17] "H_buildUpPlayPositioningClass"    "H_chanceCreationPassing"         
+[19] "H_chanceCreationPassingClass"     "H_chanceCreationCrossing"        
+[21] "H_chanceCreationCrossingClass"    "H_chanceCreationShooting"        
+[23] "H_chanceCreationShootingClass"    "H_chanceCreationPositioningClass"
+[25] "H_defencePressure"                "H_defencePressureClass"          
+[27] "H_defenceAggression"              "H_defenceAggressionClass"        
+[29] "H_defenceTeamWidth"               "H_defenceTeamWidthClass"         
+[31] "A_buildUpPlaySpeed"               "A_buildUpPlaySpeedClass"         
+[33] "A_buildUpPlayDribblingClass"      "A_buildUpPlayPassing"            
+[35] "A_buildUpPlayPassingClass"        "A_buildUpPlayPositioningClass"   
+[37] "A_chanceCreationPassing"          "A_chanceCreationPassingClass"    
+[39] "A_chanceCreationCrossing"         "A_chanceCreationCrossingClass"   
+[41] "A_chanceCreationShooting"         "A_chanceCreationShootingClass"   
+[43] "A_chanceCreationPositioningClass" "A_defencePressure"               
+[45] "A_defencePressureClass"           "A_defenceAggression"             
+[47] "A_defenceAggressionClass"         "A_defenceTeamWidth"              
+[49] "A_defenceTeamWidthClass"          "result"
+
+```{r}
+dataset <- read.csv(file.path('datasets', 'data.csv'))
+```
+
+```{r}
+#data <- subset(dataset, select = c(home_team_api_id, away_team_api_id, home_team_goal, away_team_goal, result))
+data <- dataset
+head(data)
+```
+
+###############################################################################################################
+
+**FACTOR MATCH A vs B **
+
+```{r}
+a <- which(data$home_team_api_id == 10261)
+b <- which(data$away_team_api_id == 8455)
+f_ab <- factor(a,b)[which(!is.na(factor(a,b)))]
+f_ab <- as.numeric(as.character(f_ab))
+rm(a, b)
+data[f_ab, ]
+```
+
+**FACTOR MATCH A2 vs B2 **
+
+```{r}
+a2 <- which(data$home_team_api_id == 8455)
+b2 <- which(data$away_team_api_id == 10261)
+f2_ab <- factor(a2,b2)[which(!is.na(factor(a2,b2)))]
+f2_ab <- as.numeric(as.character(f2_ab))
+rm(a2, b2)
+data[f2_ab, ]
+```
+
+**INDEX MATCH A vs B and A2 vs B2**
+
+```{r}
+temp <- c(21, 300, 892, 1087, 1304, 1439, 1576, 1760, 2043)
+temp2 <- sort(c(f_ab, f2_ab))
+```
+
+
+###############################################################################################################
+
+*Adding new column*
+  n                    : number of match time A vs B
+  sum_goals home away  : h_sum_goals, a_sum_goals
+  n win, draw          : h_nwin, a_nwin, ha_ndraw
+  
+
+```{r}
+data$n <- 1
+data$h_sum_goals <- 0
+data$a_sum_goals <- 0
+data$h_nwin <- 0
+data$a_nwin <- 0
+data$ha_ndraw <- 0
+data$h_sum_goals[1] <- data$home_team_goal[1]
+data$a_sum_goals[1] <- data$away_team_goal[1]
+```
+
+
+```{r}
+ addNGoals <- function(data){
+   for(nr in 2:nrow(data)){
+     h <- data$home_team_api_id[nr]
+     a <- data$away_team_api_id[nr]
+     n <- 0; hg <- 0; ag <- 0; 
+     hwin <- 0; awin <-0; hadraw <- 0;
+     for(renum in nr:2){
+       renum <- renum - 1
+       if(h == data$home_team_api_id[renum] || h == data$away_team_api_id[renum]){
+         if(a == data$home_team_api_id[renum] || a == data$away_team_api_id[renum]){
+           n <- data$n[renum]
+           if(h == data$home_team_api_id[renum]) { 
+             hg <- data$h_sum_goals[renum]
+             ag <- data$a_sum_goals[renum]
+             hwin <- data$h_nwin[renum]
+             awin <- data$a_nwin[renum]
+            }
+           else {  
+             hg <- data$a_sum_goals[renum]; 
+             ag <- data$h_sum_goals[renum]
+             hwin <- data$a_nwin[renum]
+             awin <- data$h_nwin[renum]
+           }
+           hadraw <- data$ha_ndraw[renum];
+           break
+         }
+       }
+     }
+     data$n[nr] <- n + 1
+     data$h_sum_goals[nr] <- data$home_team_goal[nr] + hg
+     data$a_sum_goals[nr] <- data$away_team_goal[nr] + ag
+     data$h_nwin[nr] <- hwin
+     data$a_nwin[nr] <- awin
+     data$ha_ndraw[nr] <- hadraw
+     if( data$home_team_goal[nr] > data$away_team_goal[nr]) { data$h_nwin[nr] <- data$h_nwin[nr] + 1 }
+     else if( data$home_team_goal[nr] < data$away_team_goal[nr] ) { data$a_nwin[nr] <- data$a_nwin[nr] + 1}
+     else { data$ha_ndraw[nr] <- data$ha_ndraw[nr] + 1}
+   }
+   return(data)
+ }
+data_ngoals <- addNGoals(data)
+data_ngoals[temp, ]
+```
+
+
+###############################################################################################################
+
+*Adding new column*
+  percent_win home, away, draw: h_percent_win, a_percent_win, percent_draw 
+
+#percent
+```{r}
+data_ngoals_percent <- data_ngoals
+data_ngoals_percent$h_percent_win <- 0.0
+data_ngoals_percent$a_percent_win <- 0.0
+data_ngoals_percent$percent_draw <- 0.0
+```
+
+```{r}
+addPercent <- function(data){
+  data$h_percent_win[1] <- 33.333
+  data$a_percent_win[1] <- 33.333
+  data$percent_draw[1] <- 33.333
+  n_max_loop <- nrow(data) - 1
+  for(nr in 2:n_max_loop){
+    #data$h_percent_win[nr] <- (data$h_nwin[nr-1]/data$n[nr-1])*100
+    #data$a_percent_win[nr] <- (data$a_nwin[nr-1]/data$n[nr-1])*100
+    #data$percent_draw[nr] <- (data$ha_ndraw[nr-1]/data$n[nr-1])*100
+    h <- data$home_team_api_id[nr]
+    a <- data$away_team_api_id[nr]
+    last_h_nwin <- 0
+    last_a_nwin <- 0
+    last_ndraw <- 0
+    last_n <- 0
+    for(renum in nr:2){
+      renum <- renum - 1
+       if(h == data$home_team_api_id[renum] || h == data$away_team_api_id[renum]){
+         if(a == data$home_team_api_id[renum] || a == data$away_team_api_id[renum]){
+           if(h == data$home_team_api_id[renum]) { 
+             last_h_nwin <- data$h_nwin[renum]
+             last_a_nwin <- data$a_nwin[renum]
+            }
+           else {  
+             last_h_nwin <- data$a_nwin[renum]
+             last_a_nwin <- data$h_nwin[renum]
+           }
+           last_n <- data$n[renum]
+           last_ndraw <- data$ha_ndraw[renum]
+           break
+         }
+       }
+    }
+    if(data$n[nr] == 1){
+      data$h_percent_win[nr] <- 33.333
+      data$a_percent_win[nr] <- 33.333
+      data$percent_draw[nr] <- 33.333
+    }else {
+    data$h_percent_win[nr] <- (last_h_nwin/last_n)*100
+    data$a_percent_win[nr] <- (last_a_nwin/last_n)*100
+    data$percent_draw[nr] <- (last_ndraw/last_n)*100
+    }
+  }
+  return(data)
+}
+data_ngoals_percent <- addPercent(data_ngoals_percent)
+data_ngoals_percent[temp, ]
+data_ngoals_percent[temp2, ]
+```
+
+
+*VIEW FOR TESTING*
+
+```{r}
+subset(data_ngoals_percent[temp2, ], select = c(away_team_api_id, home_team_api_id, result, n, h_nwin, a_nwin, ha_ndraw, h_percent_win, a_percent_win, percent_draw))
+```
+
+*Write file*
+
+```{r}
+write.csv(data_ngoals_percent, 'data_ngoals_percent.csv')
+```
+
+

@@ -1,11 +1,9 @@
 library(e1071) # RPART, mlbench(ZOO)
 library(caret) # createFolds, createDataPartition
-library(doParallel) # for r faster
-registerDoParallel()
-
 library(shiny)
+library(shinydashboard)
 
-library(RKEEL)
-
-#loading data
-players <- read.csv("./datasets/ManU_player.csv")
+source('dataconnector.R')
+source(file.path("functions", "functions.R"))
+source(file.path("model", "model.R"))
+source(file.path("model", "predictor.R"))

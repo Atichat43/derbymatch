@@ -1,4 +1,3 @@
-library(shinydashboard)
 server <- function(input, output) {
   
   output$PlaySpeed<- renderText({
@@ -55,15 +54,16 @@ server <- function(input, output) {
     )
   }
   
-  lapply(1:10,function(i){
+  lapply(1:11,function(i){
     observeEvent(input[[paste0("show",i)]], {
       showModal(dataModal())
     })
   })
-  
+
   observeEvent(input$ok, {
     vals$data <- ({input$dataset})
     removeModal()
+    
   })
   
   # Display information about selected data
@@ -75,65 +75,26 @@ server <- function(input, output) {
   })
   
   
-  
+
   output$ui <- renderUI({
     if (is.null(input$Formation))
       return()
     switch(input$Formation,
            "4-3-3" =   tagList (
-             lapply(1:10,function(i){
+                 lapply(1:11,function(i){
+                  column(3,box(title="player",actionButton(paste0("show",i),paste0("player",i))))                   
+                 })
+               ),
+    
+           "4-4-2" = tagList (
+             lapply(1:11,function(i){
                column(3,box(title="player",actionButton(paste0("show",i),paste0("player",i))))                   
              })
            ),
-           
-           
-           "4-4-2" = tagList (
-             column(3,
-                    box(title = "player1",actionButton("action", "player1"))),
-             column(3,
-                    box(title = "player2",actionButton("action", "player2"))),
-             column(3,
-                    box(title = "player3",actionButton("action", "player3"))),
-             column(3,
-                    box(title = "player4",actionButton("action", "player4"))),
-             column(3,
-                    box(title = "player5",actionButton("action", "player5"))),
-             column(3,
-                    box(title = "player6",actionButton("action", "player6"))),
-             column(3,
-                    box(title = "player7",actionButton("action", "player7"))),
-             column(3,
-                    box(title = "player8",actionButton("action", "player8"))),
-             column(3,
-                    box(title = "player9",actionButton("action", "player9"))),
-             column(3,
-                    box(title = "player10",actionButton("action", "player10"))),
-             column(3,
-                    box(title = "player11",actionButton("action", "player11")),offset = 5)
-           ),
            "5-4-1" = tagList (
-             column(3,
-                    box(title = "player1",actionButton("action", "player1"))),
-             column(3,
-                    box(title = "player2",actionButton("action", "player2"))),
-             column(3,
-                    box(title = "player3",actionButton("action", "player3"))),
-             column(3,
-                    box(title = "player4",actionButton("action", "player4"))),
-             column(3,
-                    box(title = "player5",actionButton("action", "player5"))),
-             column(3,
-                    box(title = "player6",actionButton("action", "player6"))),
-             column(3,
-                    box(title = "player7",actionButton("action", "player7"))),
-             column(3,
-                    box(title = "player8",actionButton("action", "player8"))),
-             column(3,
-                    box(title = "player9",actionButton("action", "player9"))),
-             column(3,
-                    box(title = "player10",actionButton("action", "player10"))),
-             column(3,
-                    box(title = "player11",actionButton("action", "player11")))
+             lapply(1:11,function(i){
+               column(3,box(title="player",actionButton(paste0("show",i),paste0("player",i))))                   
+             })
            )
            
     )

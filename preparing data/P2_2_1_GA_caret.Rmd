@@ -1,0 +1,120 @@
+---
+title: "GA"
+---
+
+```{r}
+library(caret)
+library(doParallel) # parallel processing
+library(dplyr) # Used by caret
+library(pROC) # plot the ROC curve
+```
+
+
+```{r}
+set.seed(10)
+data(segmentationData) # Load the segmentation data set
+dim(segmentationData)
+head(segmentationData,2)
+```
+
+```{r}
+trainIndex <- createDataPartition(segmentationData$Case,p=.5,list=FALSE)
+trainData <- segmentationData[trainIndex,-c(1,2)]
+testData <- segmentationData[-trainIndex,-c(1,2)]
+names(trainData); length(names(trainData))
+```
+
+```{r}
+trainX <-trainData[,-1] # Create training feature data frame
+testX <- testData[,-1] # Create test feature data frame 
+y=trainData$Class # Target variable for training
+summary(y)
+```
+
+```{r}
+registerDoParallel(4) # Registrer a parallel backend for train
+getDoParWorkers() # check that there are 4 workers
+ 
+ga_ctrl <- gafsControl(functions = rfGA, # Assess fitness with RF
+                       method = "cv",    # 10 fold cross validation
+                       genParallel=TRUE, # Use parallel programming
+                       allowParallel = TRUE)
+```
+
+```{r}
+set.seed(10)
+lev <- c("PS","WS")     # Set the levels
+ 
+system.time(rf_ga3 <- gafs(x = trainX, y = y,
+                           iters = 10, # 100 generations of algorithm
+                           popSize = 20, # population size for each generation
+                           levels = lev,
+                           gafsControl = ga_ctrl))
+```
+
+```{r}
+rf_ga3
+plot(rf_ga3)
+```
+
+SVM
+```{r}
+finalFeatures <- rf_ga3$ga$final # Get features selected by GA
+trainX2 <- trainX[, finalFeatures] # training data: selected features
+testX2 <- testX[, finalFeatures] # test data: selected features
+names(trainX2)
+```
+
+# Set up training control
+```{r}
+ctrl <- trainControl(method="repeatedcv", # 10fold cross validation
+                      repeats=5, # do 5 repititions of cv
+                      summaryFunction=twoClassSummary, # Use AUC to pick the best model (Area under the curve)
+                      classProbs=TRUE)
+ctrl
+```
+
+
+#Use the expand.grid to specify the search space 
+#Note that the default search grid selects 3 values of each tuning parameter
+```{r}
+grid <- expand.grid(interaction.depth = seq(1, 4, by=2), #tree depths from 1 to 4
+                      n.trees = seq(10, 100, by=10), # let iterations go from 10 to 100
+                      shrinkage = c(0.01, 0.1), # Try 2 values fornlearning rate 
+                      n.minobsinnode = 20)
+grid
+```
+
+# Set up for parallel processing
+```{r}
+set.seed(1951)
+registerDoParallel(4,cores=4)
+```
+
+#Train and Tune the SVM
+```{r}
+svm.tune <- train(x=trainX2,
+                  y= trainData$Class,
+                  method = "svmRadial",
+                  tuneLength = 9, # 9 values of the cost function
+                  preProc = c("center","scale"),
+                  metric="ROC",
+                  trControl=ctrl) # same as for gbm above
+```
+
+#Make predictions on the test data with the SVM Model
+```{r}
+svm.pred <- predict(svm.tune,testX2)
+confusionMatrix(svm.pred,testData$Class)
+```
+
+```{r}
+svm.probs <- predict(svm.tune,testX2,type="prob") # Gen probs for ROC
+ 
+svm.ROC <- roc(predictor=svm.probs$PS,
+               response=testData$Class,
+               levels=rev(levels(testData$Class)))
+svm.ROC
+plot(svm.ROC,main="ROC for SVM built with GA selected features")
+```
+

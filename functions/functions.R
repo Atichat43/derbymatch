@@ -16,3 +16,4 @@ accuracy <- function(truth, prediction) {
   new_table <- table(truth, prediction)
   sum(diag(new_table)/sum(new_table))
 }
+

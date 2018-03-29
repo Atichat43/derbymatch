@@ -1,0 +1,118 @@
+---
+title: "R Notebook"
+---
+
+```{r}
+library(GA)
+```
+
+################################################################################################
+one dimension
+################################################################################################
+```{r}
+f <- function(x)  (x^2+x)*cos(x)
+min <- -10; max <- 10
+curve(f, min, max, n = 1000)
+```
+
+```{r}
+GA <- ga(type = "real-valued", fitness = f, min = min, max = max, 
+         monitor = FALSE)
+summary(GA)
+plot(GA)
+```
+
+
+```{r}
+curve(f, min, max, n = 1000)
+points(GA@solution, GA@fitnessValue, col = 2, pch = 19)
+```
+
+
+################################################################################################
+two dimension
+################################################################################################
+```{r}
+Rastrigin <- function(x1, x2){
+  20 + x1^2 + x2^2 - 10*(cos(2*pi*x1) + cos(2*pi*x2))
+}
+x1 <- x2 <- seq(-5.12, 5.12, by = 0.1)
+f <- outer(x1, x2, Rastrigin)
+persp3D(x1, x2, f, theta = 50, phi = 20, color.palette = bl2gr.colors)
+filled.contour(x1, x2, f, color.palette = bl2gr.colors)
+```
+
+```{r}
+GA <- ga(type = "real-valued", 
+         fitness =  function(x) -Rastrigin(x[1], x[2]),
+         min = c(-5.12, -5.12), max = c(5.12, 5.12), 
+         popSize = 50, maxiter = 1000, run = 100)
+summary(GA)
+plot(GA)
+filled.contour(x1, x2, f, color.palette = bl2gr.colors, 
+  plot.axes = { axis(1); axis(2); 
+                points(GA@solution[,1], GA@solution[,2], 
+                       pch = 3, cex = 2, col = "white", lwd = 2) }
+)
+```
+
+
+################################################################################################
+Constrained optimisation
+################################################################################################
+```{r}
+f <- function(x) { 100 * (x[1]^2 - x[2])^2 + (1 - x[1])^2 }
+c1 <- function(x) { x[1]*x[2] + x[1] - x[2] + 1.5 }
+c2 <- function(x) { 10 - x[1]*x[2] }
+ngrid = 250
+x1 = seq(0, 1, length = ngrid)
+x2 = seq(0, 13, length = ngrid)
+x = c(0.8122, 12.3104)
+f(x); c1(x); c2(x); 
+```
+
+```{r}
+x12 = expand.grid(x1, x2)
+col = adjustcolor(bl2gr.colors(4)[2:3], alpha = 0.2)
+x12
+plot(x1, x2, type = "n", xaxs = "i", yaxs = "i")
+ image(x1, x2, matrix(ifelse(apply(x12, 1, c1) <= 0, 0, NA), ngrid, ngrid),
+       col = col[1], add = TRUE)
+ image(x1, x2, matrix(ifelse(apply(x12, 1, c2) <= 0, 0, NA), ngrid, ngrid),
+       col = col[2], add = TRUE)
+ contour(x1, x2, matrix(apply(x12, 1, f), ngrid, ngrid),
+         nlevels = 21, add = TRUE)
+```
+
+```{r}
+fitness <- function(x) 
+{ 
+  f <- -f(x)                         # we need to maximise -f(x)
+  pen <- sqrt(.Machine$double.xmax)  # penalty term
+  penalty1 <- max(c1(x),0)*pen       # penalisation for 1st inequality constraint
+  penalty2 <- max(c2(x),0)*pen       # penalisation for 2nd inequality constraint
+  f - penalty1 - penalty2            # fitness function value
+}
+
+GA = ga("real-valued", fitness = fitness, 
+        min = c(0,0), max = c(1,13), 
+        maxiter = 5000, run = 1000, seed = 123)
+summary(GA)
+fitness(GA@solution); f(GA@solution); c1(GA@solution); c2(GA@solution)
+```
+
+```{r}
+plot(x1, x2, type = "n", xaxs = "i", yaxs = "i")
+image(x1, x2, matrix(ifelse(apply(x12, 1, c1) <= 0, 0, NA), ngrid, ngrid), 
+      col = col[1], add = TRUE)
+image(x1, x2, matrix(ifelse(apply(x12, 1, c2) <= 0, 0, NA), ngrid, ngrid), 
+      col = col[2], add = TRUE)
+contour(x1, x2, matrix(apply(x12, 1, f), ngrid, ngrid), 
+        nlevels = 21, add = TRUE)
+points(GA@solution[1], GA@solution[2], col = "dodgerblue3", pch = 3)  # GA solution
+```
+
+################################################################################################
+Hybrid Genetic Algorithms (HGAs) 
+################################################################################################
+

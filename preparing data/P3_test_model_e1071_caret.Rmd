@@ -1,0 +1,117 @@
+---
+title: "TEST_MODEL"
+output: html_notebook
+---
+
+```{r}
+dataset <- read.csv(file.path('datasets', 'data_ngoals_percent_numeric.csv'))
+```
+
+Function: *Accuracy*
+
+```{r}
+accTable <- function(table){
+  acc <- (table[1] + table[5]+ table[9])/sum(table[1:9])
+  return(acc)
+}
+```
+
+
+###########################################################################################################
+LIBRARY *e1071*
+** SPIT DATA ** training_set, test_set and k folds
+
+```{r}
+library(caTools)
+set.seed(123)
+split = sample.split(dataset$result, SplitRatio = 0.75)
+training_set = subset(dataset, split == TRUE)
+test_set = subset(dataset, split == FALSE)
+folds = createFolds(training_set$result, k = 10)
+rm(split)
+```
+
+** CONSTRUCT MODEL **
+Model: e1071::*SVM*
+
+```{r}
+svm_model_e1071 <- e1071::svm(formula = result ~.,
+                              data = training_set,
+                              type = 'C-classification')
+
+testPredict <- predict(svm_model_e1071, newdata = test_set)
+table(test_set$result, testPredict)
+accTable(table(test_set$result, testPredict))
+```
+
+
+```{r}
+cross_validation_model <- lapply(folds, function(f){
+                                  training_fold = training_set[-f, ]
+                                  test_fold = training_set[f, ]
+                                  
+                                  svm_model_e1071 <- e1071::svm(formula = result ~.,
+                                                   data = training_fold,
+                                                   type = 'C-classification')
+                                  
+                                  y_pred = predict(svm_model_e1071, newdata = test_fold)
+                                  t = table(test_fold$result, y_pred)
+                                  return(accTable(t))})
+
+c(mean(as.numeric(cross_validation_model)), 
+  min(as.numeric(cross_validation_model)),
+  max(as.numeric(cross_validation_model)))
+```
+
+
+###########################################################################################################
+LIBRARY *CARET*
+
+** SPIT DATA ** training_set, test_set and k folds
+```{r}
+library(caret)
+set.seed(3033)
+intrain <- caret::createDataPartition(y = dataset$result, p= 0.70, list = FALSE)
+training_set <- dataset[intrain,]
+test_set <- dataset[-intrain,]
+
+training_set[["result"]] <- factor(training_set[["result"]])
+tr_ctrl <- trainControl(method = "repeatedcv", number = 10, repeats = 3)
+```
+
+** CONSTRUCT MODEL **
+Model: caret::*SVM*
+```{r}
+svm_model_methods <- c("svmPoly", "svmRadial", "svmLinear")
+for(M in svm_model_methods){
+  svm_model <- caret::train(result ~., data = training_set, method = M,
+                      trControl=tr_ctrl,
+                      preProcess = c("center", "scale"),
+                      tuneLength = 2)
+  test_pred <- predict(svm_model, newdata = test_set)
+  print(M)
+  print(table(test_pred, test_set$result))
+  print(accTable(table(test_pred, test_set$result)))
+  svm_model
+}
+rm(M, test_pred, svm_model_methods)
+```
+
+Model: caret:: Multi-Layer Perceptron, with multiple layers *mlpML* and Random Forest *rf*
+```{r}
+other_model_methods <- c("mlpML", "rf")
+for(M in other_model_methods){
+  other_model <- caret::train(result ~., data = training_set, method = M,
+                      trControl=tr_ctrl,
+                      preProcess = c("center", "scale"),
+                      tuneLength = 2)
+  test_pred <- predict(other_model, newdata = test_set)
+  print(M)
+  print(table(test_pred, test_set$result))
+  print(accTable(table(test_pred, test_set$result)))
+  other_model
+}
+rm(M, test_pred, other_model_methods)
+```
+
+

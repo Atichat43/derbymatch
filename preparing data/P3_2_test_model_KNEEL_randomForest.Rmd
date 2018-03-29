@@ -1,0 +1,64 @@
+---
+title: "R Notebook"
+---
+
+```{r}
+dataset <- read.csv(file.path('datasets', 'data_ngoals_percent.csv'))
+```
+
+```{r}
+library(caret)
+intrain <- caret::createDataPartition(y = dataset$result, p= 0.70, list = FALSE)
+training_set <- dataset[intrain,]
+test_set <- dataset[-intrain,]
+```
+
+############################################################################################################
+MODEL: randomForest::*Random Forest*
+
+mlp_bp_c_model <- MLP_BP_C(training_set, test_set, hidden_layers = 1, hidden_nodes = 41)
+smo_c_model <- SMO_C(training_set, test_set)
+
+```{r}
+library(RKEEL)
+furia_c_model <- RKEEL::FURIA_C(training_set, test_set)
+furia_c_model$run()
+pd <- furia_c_model$testPredictions
+table(pd)
+rm(furia_c_model, pd)
+```
+
+
+############################################################################################################
+MODEL: randomForest::*Random Forest*
+tuning parameter: mtry(Randomly Selected Predictors)
+```{r}
+library(randomForest)
+set.seed(415)
+randomForest_model <- randomForest(result ~.,
+                      data=training_set, 
+                      importance=TRUE, 
+                      ntree=500)
+randomForest_model
+accuracy(test_result, predict(randomForest_model, test_data))
+varImpPlot(randomForest_model)
+```
+
+** TESTING MODEL **
+```{r}
+k <- 10
+index <- 1:nrow(dataset)
+index <- sample(index)
+fold <- rep(1:k, each=nrow(dataset)/k)[1:nrow(dataset)]
+folds <- split(index, fold)
+
+#Do each fold
+accs <- vector(mode = "numeric")
+for(i in 1:length(folds)){
+  model <- randomForest(result ~., data=dataset[-folds[[i]], ], importance=TRUE, ntree=500)
+  accs[i] <- accuracy(dataset[fold[[i]], ]$result, predict(model, dataset[fold[[i]], ]))
+}
+accs
+```
+
+
