@@ -1,0 +1,40 @@
+---
+title: "Last Players Attributes"
+output: html_notebook
+---
+
+```{r}
+dataset <- read.csv(file.path('datasets', 'Player_Attributes.csv'))
+```
+
+
+```{r}
+players_attr <- dataset
+API_INDEX <- 1
+players_attr <- subset(players_attr, select = c(player_api_id, date, overall_rating, potential, ball_control, acceleration, dribbling, strength, long_passing, crossing))
+players_attr <- players_attr[order(players_attr$player_api_id), ]
+api <- factor(players_attr[, API_INDEX])
+api <- levels(api)
+```
+
+
+```{r}
+point <- 1
+table <- players_attr[1,]
+table[,] <- 0
+count <- 1
+for(a in api){
+  for(nr in point:nrow(players_attr))
+    if (players_attr[nr, API_INDEX] == a){
+      point <- nr
+      table[count, ] <- players_attr[nr, ]
+      count = count + 1 
+      break
+    }
+}
+```
+
+```{r}
+table <- subset(table, select = -c(date))
+```
+
