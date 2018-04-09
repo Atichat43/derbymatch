@@ -17,10 +17,24 @@ getPlayers <- function(teamName){
   return(table_players)
 }
 
-toStringPlayers <- function(players){
+toStringPlayers <- function(players, n = 3){
   arr <- as.array(as.character(1:nrow(players)))
   for(nr in 1:nrow(players)){
-    arr[nr] <- paste(as.character(players$player_name[nr]), as.character(players$player_position[nr]), as.character(players$player_number[nr]), sep=" / ")
+    if(n == 3){
+      arr[nr] <- paste(as.character(players$player_name[nr]), as.character(players$player_position[nr]), as.character(players$player_number[nr]), sep=" / ")
+    }
+    else if(n == 1){
+      arr[nr] <- as.character(players$player_name[nr])
+    }
+    else{}
   }
   return(arr)
+}
+
+apiPlayers <- function(players){
+  api <- as.array(as.character(1:nrow(players)))
+  for(nr in 1:nrow(players)){
+    api[nr] <- as.character(players[nr, 2])
+  }
+  return(api)
 }
