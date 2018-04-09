@@ -49,21 +49,6 @@ shiny::fluidRow(
   
   column(width = 9,
     shinydashboard::box(width = NULL, title = "Select 11 players",
-    checkboxGroupInput("checkGroup", label = h3("Manchester United's Player"), 
-                       choices = list("David de Gea" = 1, 
-                                      "Phil Jones" = 2, 
-                                      "Marcos Rojo" = 3, 
-                                      "Jonny Evans" = 4, 
-                                      "Memphis Depay" = 5, 
-                                      "Juan Mata" = 6, 
-                                      "Anthony Martial" = 7,
-                                      "Wayne Rooney" = 8,
-                                      "Ander Herrera" = 9,
-                                      "Chris Smalling" = 10,
-                                      "Ashley Young" = 11,
-                                      "Bastian Schweinsteiger" = 8,
-                                      "Sergio Romero" = 9,
-                                      "Marouane Fellaini" = 10,
-                                      "Guillermo Varela" = 11))
+                        uiOutput(outputId = "Homeplayer")
   ))
 )

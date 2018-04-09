@@ -173,3 +173,20 @@ output$dataInfo <- renderPrint({
 output$graph_com <- renderPlot(stars(mtcars[, 1:7], locations = c(0, 0), radius = FALSE,key.loc = c(0, 0), main = "Motor Trend Cars", lty = 2), width = "auto", height = "auto", res = 72,
                                env = parent.frame(), quoted = FALSE, execOnResize = FALSE,outputArgs = list())
 
+output$player_group <- renderUI({
+  playerList <- toStringPlayers(getPlayers(input$opponent_select))
+  tempText <- paste(input$opponent_select,"'s Player")
+  checkboxGroupInput("checkGroup", label = h3(tempText), 
+                     choices = playerList,
+                     selected = playerList[1:11]
+  )
+})
+
+output$Homeplayer<- renderUI({
+  playerList <- toStringPlayers(getPlayers("Manchester United"))
+  checkboxGroupInput("checkGroup", label = h3("Manchester United's Player"), 
+                     choices = playerList,
+                     selected = playerList[1:11]
+  )
+})
+

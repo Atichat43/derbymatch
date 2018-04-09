@@ -1,0 +1,74 @@
+---
+title: "Last Players Attributes"
+output: html_notebook
+---
+
+```{r}
+dataset <- read.csv(file.path('datasets', 'Player_Attributes.csv'))
+```
+
+
+```{r}
+players_attr <- dataset
+API_INDEX <- 1
+# players_attr <- subset(players_attr, select = c(player_api_id, date, overall_rating, potential, ball_control, acceleration, dribbling, strength, long_passing, crossing))
+players_attr <- subset(players_attr, select = -c(id, player_fifa_api_id, date))
+players_attr <- players_attr[order(players_attr$player_api_id), ]
+api <- factor(players_attr[, API_INDEX])
+api <- levels(api)
+```
+
+
+```{r}
+point <- 1
+table <- players_attr[1,]
+table[,] <- 0
+count <- 1
+for(a in api){
+  for(nr in point:nrow(players_attr))
+    if (players_attr[nr, API_INDEX] == a){
+      point <- nr
+      table[count, ] <- players_attr[nr, ]
+      count = count + 1 
+      break
+    }
+}
+```
+
+```{r}
+write(table, file.path('datasets', 'lastest_players_attr.csv'))
+```
+
+
+```{r}
+for(path in file_paths){
+file_name <- path
+file <- read.csv(file.path('datasets/players', file_name))
+total <- merge(players_attr, file, by="player_api_id")
+write.csv(total, file.path('datasets/players', file_name))
+}
+```
+
+```{r}
+file_paths <- c("Player_Arsenal.csv",
+                "Player_Aston Villa.csv",
+                "Player_Bournemouth.csv",
+                "Player_Chelsea.csv",
+                "Player_Crystal Palace.csv",
+                "Player_Everton.csv",
+                "Player_Leicester City.csv",
+                "Player_Liverpool.csv",
+                "Player_Manchester City.csv",
+                "Player_Manchester United.csv",
+                "Player_Newcastle United.csv",
+                "Player_Norwich City.csv",
+                "Player_Southampton.csv",
+                "Player_Stoke City.csv",
+                "Player_Sunderland.csv",
+                "Player_Swansea City.csv",
+                "Player_Tottenham Hotspur.csv",
+                "Player_Watford.csv",
+                "Player_West Bromwich Albion.csv",
+                "Player_West Ham United.csv")
+```
+
