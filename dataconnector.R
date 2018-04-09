@@ -24,3 +24,10 @@ toStringPlayers <- function(players){
   }
   return(arr)
 }
+apiPlayers <- function(players){
+  api <- as.array(as.character(1:nrow(players)))
+  for(nr in 1:nrow(players)){
+    api[nr] <- as.character(players[nr, 2])
+  }
+  return(api)
+}

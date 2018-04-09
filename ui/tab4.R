@@ -1,13 +1,22 @@
 shiny::fluidRow(
-  column(width = 3,
-         box(width = NULL,title = "Away Tactic",
-             uiOutput(outputId = "select_input_Away")
-         )
+  column(width = 4,
+         box(width = NULL,title = "MANCHESTER UNITED"),
+         radioButtons("rb", "Choose one:",
+                      choiceNames = list(
+                        icon("calendar"),
+                        HTML("<p style='color:red;'>Red Text</p>"),
+                        "Normal text"
+                      ),
+                      choiceValues = list(
+                        "icon", "html", "text"
+                      )),
+         textOutput("txt")
   ),
   
-  column(width = 9,
-         box(width = NULL, title = "Select 11 players",
-             uiOutput(outputId = "player_group")
-         )
-  )
+  column(width = 4,
+         box(width = NULL, title = "test")
+  ),
+  column(width = 4,
+         box(width = NULL, title = "Away Tactic")
+)
 )
