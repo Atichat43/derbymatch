@@ -19,7 +19,6 @@ shiny::fluidRow(
                                     "Tottenham Hotspur" = "Tottenham Hotspur",
                                     "Watford" = "Watford", 	
                                     "West Bromwich Albion" = "West Bromwich Albion", 	
-                                    "West Ham United" = "West Ham United",
-                                    "" = ""),
+                                    "West Ham United" = "West Ham United"),
                      selected = "Arsenal")
   )
