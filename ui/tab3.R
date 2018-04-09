@@ -7,7 +7,6 @@ shiny::fluidRow(
   
   column(width = 9,
     box(width = NULL, title = "Select 11 players",
-        uiOutput(outputId = "player_group")
         uiOutput(outputId = "Awayplayer")
     )
   )

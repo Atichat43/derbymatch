@@ -20,7 +20,7 @@ getPlayers <- function(teamName){
 toStringPlayers <- function(players){
   arr <- as.array(as.character(1:nrow(players)))
   for(nr in 1:nrow(players)){
-    arr[nr] <- paste(as.character(players[nr, 3]), as.character(players[nr, 4]), as.character(players[nr, 5]), sep=" / ")
+    arr[nr] <- paste(as.character(players$player_name[nr]), as.character(players$player_position[nr]), as.character(players$player_number[nr]), sep=" / ")
   }
   return(arr)
 }
