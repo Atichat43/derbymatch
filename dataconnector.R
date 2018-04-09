@@ -11,9 +11,16 @@ getDataset <- function(){
   return(DATASET)
 }
 
-
 getPlayers <- function(teamName){
   table_players <- read.csv(file.path('datasets', 'players', paste('Player_', teamName, '.csv', sep="")))
   table_players <- subset(table_players, select = c(player_name, player_position, player_number))
   return(table_players)
+}
+
+toStringPlayers <- function(players){
+  arr <- as.array(as.character(1:nrow(players)))
+  for(nr in 1:nrow(players)){
+    arr[nr] <- paste(as.character(players[nr, 1]), as.character(players[nr, 2]), as.character(players[nr, 3]), sep=" / ")
+  }
+  return(arr)
 }
