@@ -170,23 +170,26 @@ output$dataInfo <- renderPrint({
 })
 
 
-
-output$player_group <- renderUI({
+output$Awayplayer <- renderUI({
   playerList <- toStringPlayers(getPlayers(input$opponent_select))
+  apiList <- apiPlayers(getPlayers(input$opponent_select))
   tempText <- paste(input$opponent_select,"'s Player")
-  checkboxGroupInput("checkGroup", label = h3(tempText), 
-                     choices = playerList,
-                     selected = playerList[1:11]
+  checkboxGroupInput("AwayPlayerGroup", label = h3(tempText), 
+                     choiceNames = playerList,
+                     choiceValues = apiList,
+                     selected = apiList[1:11]
   )
 })
+output$AwayApi <- renderTable({input$AwayPlayerGroup})
+
 
 output$Homeplayer<- renderUI({
   playerList <- toStringPlayers(getPlayers("Manchester United"))
-  checkboxGroupInput("checkGroup", label = h3("Manchester United's Player"), 
-                     choices = playerList,
-                     selected = playerList[1:11]
+  apiList <- apiPlayers(getPlayers("Manchester United"))
+  checkboxGroupInput("HomePlayerGroup", label = h3("Manchester United's Player"), 
+                     choiceNames = playerList,
+                     choiceValues = apiList,
+                     selected = apiList[1:11]
   )
 })
-#tab4 render plot
-output$graph_com <- renderPlot(stars(mtcars[, 1:7], locations = c(0, 0), radius = FALSE,key.loc = c(0, 0), main = "Motor Trend Cars", lty = 2), width = "auto", height = "auto", res = 72,
-                               env = parent.frame(), quoted = FALSE, execOnResize = FALSE,outputArgs = list())
+output$HomeApi <- renderTable({input$HomePlayerGroup})
