@@ -44,6 +44,3 @@ accuracy <- function(truth, prediction) {
   new_table <- table(truth, prediction)
   sum(diag(new_table)/sum(new_table))
 }
-
-# cast to numeric
-apply(tactic, 2, as.numeric)

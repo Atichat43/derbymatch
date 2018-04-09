@@ -32,6 +32,7 @@ createDefaultTactic <- function(){
 }
 
 getTactic <- function(teamApi){
+  matches <- getDataset()
   for(nr in nrow(matches):1){
     if(matches$home_team_api_id[nr] == teamApi && matches$away_team_api_id[nr] == MANUNITED_API){
       tactic <- matches[nr, 8:18]
@@ -42,8 +43,9 @@ getTactic <- function(teamApi){
       break
     }
   }
-  temp_tactic <- createTactic()
+  temp_tactic <- createDefaultTactic()
   temp_tactic[1:length(temp_tactic)] <- tactic[1:length(temp_tactic)]
+  apply(temp_tactic, 2, as.numeric)
   return(temp_tactic)
 }
 
