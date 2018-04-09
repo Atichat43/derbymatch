@@ -1,10 +1,5 @@
 source("init.R")
 
-# 
-# ui <- fluidPage(
-#   # source(file.path("ui", "title.R"),  local = TRUE)$value,
-#   #source(file.path("ui", "ui.R"),  local = TRUE)$value
-# )
 tactic <- createDefaultTactic()
 tactic_opponent <- createDefaultTactic()
 ui <- dashboardPage(
@@ -24,7 +19,6 @@ ui <- dashboardPage(
       #fourth tab
       tabItem(tabName = "summary",
               h2("Show the summary of both team")
-              
       ),
       #fifth tab
       tabItem(tabName = "prediction",
