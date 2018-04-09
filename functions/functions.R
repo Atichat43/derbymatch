@@ -53,5 +53,12 @@ getTeamApi <- function(teamName){
   return(team_api_name[which(team_api_name$team_long_name == teamName), ]$team_api_id)
 }
 
+#plot graph_com
+scores <- data.frame("Label"=c("ball control", "acceleration", "dribbing",
+                               "strength",  "long shot", "crossing"),
+                     "Manchester United" = c(9, 7, 4, 5, 3, 7),
+                     "Andy" = c(7, 6, 6, 2, 6, 9))
+
+chartJSRadar(scores, maxScale = 10, showToolTipLabel=TRUE)
 
 

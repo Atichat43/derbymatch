@@ -18,7 +18,7 @@ ui <- dashboardPage(
       ),
       #fourth tab
       tabItem(tabName = "summary",
-              h2("Show the summary of both team")
+              h2("MANCHESTER UNITED WIN")
       ),
       #fifth tab
       tabItem(tabName = "prediction",
