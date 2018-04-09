@@ -1,6 +1,6 @@
 shiny::fluidRow(
   column(width = 3,
-         shinydashboard::box(width = NULL,title = "Tactic",
+         box(width = NULL,title = "Home Tactic",
              selectInput("PlaySpeed", label = h5("PlaySpeed"), 
                          choices = list("Balance" = 1, "Fast" = 2, "Slow" = 3), 
                          selected = tactic$PlaySpeed),
@@ -43,13 +43,12 @@ shiny::fluidRow(
              
              selectInput("DefenceTeamWidth", label = h5("DefenceTeamWidth"), 
                          choices = list("Narrow" = 1, "Normal" = 2, "Wide" = 3), 
-                         selected = tactic$TeamWidth),
-             
-             actionButton("ok", "OK"))
+                         selected = tactic$TeamWidth)
+        )
   ),
   
   column(width = 9,
-    shinydashboard::box(width = NULL, title = "Select 11 players"),
+    shinydashboard::box(width = NULL, title = "Select 11 players",
     checkboxGroupInput("checkGroup", label = h3("Manchester United's Player"), 
                        choices = list("David de Gea" = 1, 
                                       "Phil Jones" = 2, 
@@ -66,5 +65,5 @@ shiny::fluidRow(
                                       "Sergio Romero" = 9,
                                       "Marouane Fellaini" = 10,
                                       "Guillermo Varela" = 11))
-  )
+  ))
 )

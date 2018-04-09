@@ -1,7 +1,7 @@
 source("init.R")
 
 tactic <- createDefaultTactic()
-tactic_opponent <- createDefaultTactic()
+#tactic_opponent <- createDefaultTactic()
 ui <- dashboardPage(
   source(file.path("ui", "header.R"),  local = TRUE)$value,
   source(file.path("ui", "sidebar.R"),  local = TRUE)$value,
