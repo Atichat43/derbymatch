@@ -28,7 +28,7 @@ title: "Preparing data: add feature win percent last match before"
 [49] "A_defenceTeamWidthClass"          "result"
 
 ```{r}
-dataset <- read.csv(file.path('datasets', 'data.csv'))
+dataset <- read.csv(file.path('datasets', 'data_preparing.csv'))
 ```
 
 ```{r}

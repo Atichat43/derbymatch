@@ -12,8 +12,44 @@ getData <- function(position) {
   return(players)
 }
 
-accuracy <- function(truth, prediction) {
-  new_table <- table(truth, prediction)
-  sum(diag(new_table)/sum(new_table))
+MANUNITED_API <- 10260
+
+createDefaultTactic <- function(){
+  set_tactic_default = 1
+  tactic <- data.frame('PlaySpeed' = set_tactic_default, 
+                       'PlayDribbling' = set_tactic_default,
+                       'PlayPassing'= set_tactic_default, 
+                       'PlayPositioning'= set_tactic_default, 
+                       'Passing'= set_tactic_default,
+                       'Crossing'= set_tactic_default, 
+                       'Shooting'= set_tactic_default, 
+                       'Positioning'= set_tactic_default,
+                       'Pressure' = set_tactic_default, 
+                       'Aggression' = set_tactic_default, 
+                       'TeamWidth' = set_tactic_default)
+  rm(set_tactic_default)
+  return(tactic)
 }
+
+getTactic <- function(teamApi){
+  for(nr in nrow(matches):1){
+    if(matches$home_team_api_id[nr] == teamApi && matches$away_team_api_id[nr] == MANUNITED_API){
+      tactic <- matches[nr, 8:18]
+      break
+    }  
+    else if(matches$away_team_api_id[nr] == teamApi && matches$home_team_api_id[nr] == MANUNITED_API){
+      tactic <- matches[nr, 19:29]
+      break
+    }
+  }
+  temp_tactic <- createTactic()
+  temp_tactic[1:length(temp_tactic)] <- tactic[1:length(temp_tactic)]
+  return(temp_tactic)
+}
+
+getTeamApi <- function(teamName){
+  return(team_api_name[which(team_api_name$team_long_name == teamName), ]$team_api_id)
+}
+
+
 

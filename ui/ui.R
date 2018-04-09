@@ -1,97 +1,107 @@
-header <- dashboardHeader(
-  title = "Derby Match Simulator"
-)
+# library(shinydashboard)
+# library(shiny)
+# 
+# getTactic <- function(teamApi){
+#   for(nr in nrow(Matchs):1){
+#     if(Matchs$away_team_api_id[nr] == teamApi){
+#       tactic <- Matchs[nr, 8:18]
+#       break
+#     }  
+#     else if(Matchs$home_team_api_id[nr] == teamApi){
+#       tactic <- Matchs[nr, 19:29]
+#       break
+#     }
+#   }
+#   return(tactic)
+# }
+# 
+# getTeamApi <- function(teamName){
+#   return(Team_api_name[which(Team_api_name$team_long_name == teamName), ]$team_api_id)
+# }
 
-sidebar <- dashboardSidebar(
-  sidebarMenu(
-    menuItem("Choose Opponent",tabName = "Choose_opponent", icon = icon("user")),
-    menuItem("Select Home Tactic & Players", tabName = "tactic_player", icon = icon("user")),
-    menuItem("Select Away Tactic & Players", tabName = "tactic_player2", icon = icon("user")),
-    menuItem("Summary", tabName = "summary", icon = icon("th")),
-    menuItem("Predition", tabName = "prediction", icon = icon("th"))
-  )
-)
+
+# set_tactic_default = 1
+# tactic_h <- data.frame('H_buildUpPlaySpeedClass' = set_tactic_default, 
+#                      'H_buildUpPlayDribblingClass' = set_tactic_default,
+#                      'H_buildUpPlayPassingClass'= set_tactic_default, 
+#                      'H_buildUpPlayPositioningClass'= set_tactic_default, 
+#                      'H_chanceCreationPassingClass'= set_tactic_default,
+#                      'H_chanceCreationCrossingClass'= set_tactic_default, 
+#                      'H_chanceCreationShootingClass'= set_tactic_default, 
+#                      'H_chanceCreationPositioningClass'= set_tactic_default,
+#                      'H_defencePressureClass' = set_tactic_default, 
+#                      'H_defenceAggressionClass' = set_tactic_default, 
+#                      'H_defenceTeamWidthClass' = set_tactic_default)
+# 
+# rm(set_tactic_default)
+
+# header <- dashboardHeader(
+#   title = "Derby Match Simulator"
+# )
+
+# sidebar <- dashboardSidebar(
+#   sidebarMenu(
+#     menuItem("Choose Opponent",tabName = "Choose_opponent", icon = icon("user")),
+#     menuItem("Select Home Tactic & Players", tabName = "tactic_player", icon = icon("user")),
+#     menuItem("Select Away Tactic & Players", tabName = "tactic_player2", icon = icon("user")),
+#     menuItem("Summary", tabName = "summary", icon = icon("th")),
+#     menuItem("Predition", tabName = "prediction", icon = icon("th"))
+#   )
+# )
 
 body <- dashboardBody(
     tabItems(
     # First tab content
-    tabItem(tabName = "Choose_opponent",
-             fluidRow(
-               selectInput("select", label = h3("Select Team"),
-                           choices = list("Arsenal" = "Arsenal",
-                                          "Aston Villa" = "Aston villa", 	
-                                          "Bournemouth" = "Bounemouth", 	
-                                          "Chelsea" = "Chelsea",
-                                          "Crystal Palace" = "Crystal Palace", 	
-                                          "Everton" = "Everton", 	
-                                          "Leicester City" = "Leicester", 	
-                                          "Liverpool" = "Liverpool", 	
-                                          "Manchester City" = "Manchester City",
-                                          "Manchester United" = "Manchester United", 	
-                                          "Newcastle United" = "Newcastle United", 	
-                                          "Norwich City" = "Norwich City", 	
-                                          "Southampton" = "Southampton", 	
-                                          "Stoke City" = "Stoke City",
-                                          "Sunderland" = "Sunderland", 	
-                                          "Swansea City" = "Swansea City", 	
-                                          "Tottenham Hotspur" = "Tottenham Hotspur",
-                                          "Watford" = "Watford", 	
-                                          "West Bromwich Albion" = "West Bromwich Albion", 	
-                                          "West Ham United" = "West Ham United"),
-                           selected = "Arsenal")
-               
-             )
-            
-    ),
+   ,
     
-    # Second tab content
+    # Second tab content(Home team)
     tabItem(tabName = "tactic_player",
-      fluidRow(
+        shinydashboard::fluidRow(
         column(width = 3,
-          box(width = NULL,title = "Tactic",
-            selectInput("PlaySpeed", label = h5("PlaySpeed"), 
-                          choices = list("Balance" = 1, "Fast" = 2, "Slow" = 3), 
-                          selected = 1),
-              
-              selectInput("PlayDribbling", label = h5("PlayDribbling"), 
-                          choices = list("Little" = 1, "Normal" = 2),
-                          selected = 1),
-              
-              selectInput("playPassing", label = h5("playPassing"), 
-                          choices = list("Long" = 1, "Mixed" = 2, "Short" = 3), 
-                          selected = 1),
-              
-              selectInput("PlayPositioning", label = h5("PlayPositioning"), 
-                          choices = list("Free Form" = 1, "Organised" = 2),
-                          selected = 1),
-              
-              selectInput("ChanceCreationPassing", label = h5("ChanceCreationPassing"), 
-                          choices = list("Normal" = 1, "Risky" = 2, "Safe" = 3), 
-                          selected = 1),
-              
-              selectInput("ChanceCreationCross", label = h5("ChanceCreationCross"), 
-                          choices = list("Little" = 1, "Lots" = 2, "Normal" = 3), 
-                          selected = 1),
-              
-              selectInput("ChanceCreationShooting", label = h5("ChanceCreationShooting"), 
-                          choices = list("Little" = 1, "Lots" = 2, "Normal" = 3), 
-                          selected = 1),
-              
-              selectInput("ChanceCreationPosition", label = h5("ChanceCreationPosition"), 
-                          choices = list("Free Form" = 1, "Organised" = 2), 
-                          selected = 1),
-              
-              selectInput("DefencePressure", label = h5("DefencePressure"), 
-                          choices = list("Deep" = 1, "High" = 2, "Medium" = 3), 
-                          selected = 1),
-              
-              selectInput("DefenceAggression", label = h5("DefenceAggression"), 
-                          choices = list("Contain" = 1, "Double" = 2, "Press" = 3), 
-                          selected = 1),
-              
-              selectInput("DefenceTeamWidth", label = h5("DefenceTeamWidth"), 
-                          choices = list("Narrow" = 1, "Normal" = 2, "Wide" = 3), 
-                          selected = 1),
+               shinydashboard::box(width = NULL,title = "Tactic",
+                   selectInput("PlaySpeed", label = h5("PlaySpeed"), 
+                               choices = list("Balance" = 1, "Fast" = 2, "Slow" = 3), 
+                               selected = tactic$H_buildUpPlaySpeedClass),
+                   
+                   selectInput("PlayDribbling", label = h5("PlayDribbling"), 
+                               choices = list("Little" = 1, "Normal" = 2),
+                               selected = tactic$H_buildUpPlayDribblingClass),
+                   
+                   selectInput("playPassing", label = h5("playPassing"), 
+                               choices = list("Long" = 1, "Mixed" = 2, "Short" = 3), 
+                               selected = tactic$H_buildUpPlayPassingClass),
+                   
+                   selectInput("PlayPositioning", label = h5("PlayPositioning"), 
+                               choices = list("Free Form" = 1, "Organised" = 2),
+                               selected = tactic$H_buildUpPlayPositioningClass),
+                   
+                   selectInput("ChanceCreationPassing", label = h5("ChanceCreationPassing"), 
+                               choices = list("Normal" = 1, "Risky" = 2, "Safe" = 3), 
+                               selected = tactic$H_chanceCreationPassingClass),
+                   
+                   selectInput("ChanceCreationCross", label = h5("ChanceCreationCross"), 
+                               choices = list("Little" = 1, "Lots" = 2, "Normal" = 3), 
+                               selected = tactic$H_chanceCreationCrossingClass),
+                   
+                   selectInput("ChanceCreationShooting", label = h5("ChanceCreationShooting"), 
+                               choices = list("Little" = 1, "Lots" = 2, "Normal" = 3), 
+                               selected = tactic$H_chanceCreationShootingClass),
+                   
+                   selectInput("ChanceCreationPosition", label = h5("ChanceCreationPosition"), 
+                               choices = list("Free Form" = 1, "Organised" = 2), 
+                               selected = tactic$H_chanceCreationPositioningClass),
+                   
+                   selectInput("DefencePressure", label = h5("DefencePressure"), 
+                               choices = list("Deep" = 1, "High" = 2, "Medium" = 3), 
+                               selected = tactic$H_defencePressureClass),
+                   
+                   selectInput("DefenceAggression", label = h5("DefenceAggression"), 
+                               choices = list("Contain" = 1, "Double" = 2, "Press" = 3), 
+                               selected = tactic$H_defenceAggressionClass),
+                   
+                   selectInput("DefenceTeamWidth", label = h5("DefenceTeamWidth"), 
+                               choices = list("Narrow" = 1, "Normal" = 2, "Wide" = 3), 
+                               selected = tactic$H_defenceTeamWidthClass),
               
             actionButton("ok", "OK"))
           ),
@@ -106,54 +116,55 @@ body <- dashboardBody(
       )
     ),
     
+    #tacticA <- getTactic(getTeamApi("AwayTeam")),
     #third tab
     tabItem(tabName = "tactic_player2",
-            fluidRow(
+            shinydashboard::fluidRow(
               column(width = 3,
                      box(width = NULL,title = "Tactic",
-                         selectInput("PlaySpeed", label = h5("PlaySpeed"), 
+                         selectInput("PlaySpeedA", label = h5("PlaySpeed"), 
                                      choices = list("Balance" = 1, "Fast" = 2, "Slow" = 3), 
-                                     selected = 1),
+                                     selected = tacticA$H_buildUpPlaySpeedClass),
                          
-                         selectInput("PlayDribbling", label = h5("PlayDribbling"), 
+                         selectInput("PlayDribblingA", label = h5("PlayDribbling"), 
                                      choices = list("Little" = 1, "Normal" = 2),
-                                     selected = 1),
+                                     selected = tacticA$H_buildUpPlayDribblingClass),
                          
-                         selectInput("playPassing", label = h5("playPassing"), 
+                         selectInput("playPassingA", label = h5("playPassing"), 
                                      choices = list("Long" = 1, "Mixed" = 2, "Short" = 3), 
-                                     selected = 1),
+                                     selected = tacticA$H_buildUpPlayPassingClass),
                          
-                         selectInput("PlayPositioning", label = h5("PlayPositioning"), 
+                         selectInput("PlayPositioningA", label = h5("PlayPositioning"), 
                                      choices = list("Free Form" = 1, "Organised" = 2),
-                                     selected = 1),
+                                     selected = tacticA$H_buildUpPlayPositioningClass),
                          
-                         selectInput("ChanceCreationPassing", label = h5("ChanceCreationPassing"), 
+                         selectInput("ChanceCreationPassingA", label = h5("ChanceCreationPassing"), 
                                      choices = list("Normal" = 1, "Risky" = 2, "Safe" = 3), 
-                                     selected = 1),
+                                     selected = tacticA$H_chanceCreationPassingClass),
                          
-                         selectInput("ChanceCreationCross", label = h5("ChanceCreationCross"), 
+                         selectInput("ChanceCreationCrossA", label = h5("ChanceCreationCross"), 
                                      choices = list("Little" = 1, "Lots" = 2, "Normal" = 3), 
-                                     selected = 1),
+                                     selected = tacticA$H_chanceCreationCrossingClass),
                          
-                         selectInput("ChanceCreationShooting", label = h5("ChanceCreationShooting"), 
+                         selectInput("ChanceCreationShootingA", label = h5("ChanceCreationShooting"), 
                                      choices = list("Little" = 1, "Lots" = 2, "Normal" = 3), 
-                                     selected = 1),
+                                     selected = tacticA$H_chanceCreationShootingClass),
                          
-                         selectInput("ChanceCreationPosition", label = h5("ChanceCreationPosition"), 
+                         selectInput("ChanceCreationPositionA", label = h5("ChanceCreationPosition"), 
                                      choices = list("Free Form" = 1, "Organised" = 2), 
-                                     selected = 1),
+                                     selected = tacticA$H_chanceCreationPositioningClass),
                          
-                         selectInput("DefencePressure", label = h5("DefencePressure"), 
+                         selectInput("DefencePressureA", label = h5("DefencePressure"), 
                                      choices = list("Deep" = 1, "High" = 2, "Medium" = 3), 
-                                     selected = 1),
+                                     selected = tacticA$H_defencePressureClass),
                          
-                         selectInput("DefenceAggression", label = h5("DefenceAggression"), 
+                         selectInput("DefenceAggressionA", label = h5("DefenceAggression"), 
                                      choices = list("Contain" = 1, "Double" = 2, "Press" = 3), 
-                                     selected = 1),
+                                     selected = tacticA$H_defenceAggressionClass),
                          
-                         selectInput("DefenceTeamWidth", label = h5("DefenceTeamWidth"), 
+                         selectInput("DefenceTeamWidthA", label = h5("DefenceTeamWidth"), 
                                      choices = list("Narrow" = 1, "Normal" = 2, "Wide" = 3), 
-                                     selected = 1),
+                                     selected = tacticA$H_defenceTeamWidthClass),
                          
                          actionButton("ok", "OK"))
               ),
@@ -184,10 +195,11 @@ body <- dashboardBody(
     
 ))
 
-dashboardPage(
+ui <- dashboardPage(
   header,
   sidebar,
   body
 )
 
+shinyApp(ui, server)
 
