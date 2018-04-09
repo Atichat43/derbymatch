@@ -10,3 +10,10 @@ getOurTeam <- function(){
 getDataset <- function(){
   return(DATASET)
 }
+
+
+getPlayers <- function(teamName){
+  table_players <- read.csv(file.path('datasets', 'players', paste('Player_', teamName, '.csv', sep="")))
+  table_players <- subset(table_players, select = c(player_name, player_position, player_number))
+  return(table_players)
+}
