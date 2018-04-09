@@ -170,28 +170,20 @@ output$dataInfo <- renderPrint({
 })
 
 
-output$Awayplayer <- renderUI({
+output$player_group <- renderUI({
   playerList <- toStringPlayers(getPlayers(input$opponent_select))
-  apiList <- apiPlayers(getPlayers(input$opponent_select))
   tempText <- paste(input$opponent_select,"'s Player")
-  checkboxGroupInput("AwayPlayerGroup", label = h3(tempText), 
-                     choiceNames = playerList,
-                     choiceValues = apiList,
-                     selected = apiList[1:11]
+  checkboxGroupInput("checkGroup", label = h3(tempText), 
+                     choices = playerList,
+                     selected = playerList[1:11]
   )
 })
-output$AwayApi <- renderTable({input$AwayPlayerGroup})
 
 output$Homeplayer<- renderUI({
   playerList <- toStringPlayers(getPlayers("Manchester United"))
-  apiList <- apiPlayers(getPlayers("Manchester United"))
-  checkboxGroupInput("HomePlayerGroup", label = h3("Manchester United's Player"), 
-                     choiceNames = playerList,
-                     choiceValues = apiList,
-                     selected = apiList[1:11]
+  checkboxGroupInput("checkGroup", label = h3("Manchester United's Player"), 
+                     choices = playerList,
+                     selected = playerList[1:11]
   )
 })
-output$HomeApi <- renderTable({input$HomePlayerGroup})
-
-
 

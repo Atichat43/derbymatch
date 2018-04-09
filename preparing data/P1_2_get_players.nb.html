@@ -185,10 +185,11 @@ $(document).ready(function () {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxheWVyc19hdHRyIDwtIGRhdGFzZXRcbkFQSV9JTkRFWCA8LSAxXG5wbGF5ZXJzX2F0dHIgPC0gc3Vic2V0KHBsYXllcnNfYXR0ciwgc2VsZWN0ID0gYyhwbGF5ZXJfYXBpX2lkLCBkYXRlLCBvdmVyYWxsX3JhdGluZywgcG90ZW50aWFsLCBiYWxsX2NvbnRyb2wsIGFjY2VsZXJhdGlvbiwgZHJpYmJsaW5nLCBzdHJlbmd0aCwgbG9uZ19wYXNzaW5nLCBjcm9zc2luZykpXG5wbGF5ZXJzX2F0dHIgPC0gcGxheWVyc19hdHRyW29yZGVyKHBsYXllcnNfYXR0ciRwbGF5ZXJfYXBpX2lkKSwgXVxuYXBpIDwtIGZhY3RvcihwbGF5ZXJzX2F0dHJbLCBBUElfSU5ERVhdKVxuYXBpIDwtIGxldmVscyhhcGkpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxheWVyc19hdHRyIDwtIGRhdGFzZXRcbkFQSV9JTkRFWCA8LSAxXG4jIHBsYXllcnNfYXR0ciA8LSBzdWJzZXQocGxheWVyc19hdHRyLCBzZWxlY3QgPSBjKHBsYXllcl9hcGlfaWQsIGRhdGUsIG92ZXJhbGxfcmF0aW5nLCBwb3RlbnRpYWwsIGJhbGxfY29udHJvbCwgYWNjZWxlcmF0aW9uLCBkcmliYmxpbmcsIHN0cmVuZ3RoLCBsb25nX3Bhc3NpbmcsIGNyb3NzaW5nKSlcbnBsYXllcnNfYXR0ciA8LSBzdWJzZXQocGxheWVyc19hdHRyLCBzZWxlY3QgPSAtYyhpZCwgcGxheWVyX2ZpZmFfYXBpX2lkLCBkYXRlKSlcbnBsYXllcnNfYXR0ciA8LSBwbGF5ZXJzX2F0dHJbb3JkZXIocGxheWVyc19hdHRyJHBsYXllcl9hcGlfaWQpLCBdXG5hcGkgPC0gZmFjdG9yKHBsYXllcnNfYXR0clssIEFQSV9JTkRFWF0pXG5hcGkgPC0gbGV2ZWxzKGFwaSlcbmBgYCJ9 -->
 <pre class="r"><code>players_attr &lt;- dataset
 API_INDEX &lt;- 1
-players_attr &lt;- subset(players_attr, select = c(player_api_id, date, overall_rating, potential, ball_control, acceleration, dribbling, strength, long_passing, crossing))
+# players_attr &lt;- subset(players_attr, select = c(player_api_id, date, overall_rating, potential, ball_control, acceleration, dribbling, strength, long_passing, crossing))
+players_attr &lt;- subset(players_attr, select = -c(id, player_fifa_api_id, date))
 players_attr &lt;- players_attr[order(players_attr$player_api_id), ]
 api &lt;- factor(players_attr[, API_INDEX])
 api &lt;- levels(api)</code></pre>
@@ -216,14 +217,55 @@ for(a in api){
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGFibGUgPC0gc3Vic2V0KHRhYmxlLCBzZWxlY3QgPSAtYyhkYXRlKSlcbmBgYCJ9 -->
-<pre class="r"><code>table &lt;- subset(table, select = -c(date))</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud3JpdGUodGFibGUsIGZpbGUucGF0aCgnZGF0YXNldHMnLCAnbGFzdGVzdF9wbGF5ZXJzX2F0dHIuY3N2JykpXG5gYGAifQ== -->
+<pre class="r"><code>write(table, file.path('datasets', 'lastest_players_attr.csv'))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZm9yKHBhdGggaW4gZmlsZV9wYXRocyl7XG5maWxlX25hbWUgPC0gcGF0aFxuZmlsZSA8LSByZWFkLmNzdihmaWxlLnBhdGgoJ2RhdGFzZXRzL3BsYXllcnMnLCBmaWxlX25hbWUpKVxudG90YWwgPC0gbWVyZ2UocGxheWVyc19hdHRyLCBmaWxlLCBieT1cInBsYXllcl9hcGlfaWRcIilcbndyaXRlLmNzdih0b3RhbCwgZmlsZS5wYXRoKCdkYXRhc2V0cy9wbGF5ZXJzJywgZmlsZV9uYW1lKSlcbn1cbmBgYCJ9 -->
+<pre class="r"><code>for(path in file_paths){
+file_name &lt;- path
+file &lt;- read.csv(file.path('datasets/players', file_name))
+total &lt;- merge(players_attr, file, by=&quot;player_api_id&quot;)
+write.csv(total, file.path('datasets/players', file_name))
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiY2Fubm90IG9wZW4gZmlsZSAnZGF0YXNldHMvcGxheWVycy9QbGF5ZXJfQXJzZW5hbC5jc3YnOiBObyBzdWNoIGZpbGUgb3IgZGlyZWN0b3J5RXJyb3IgaW4gZmlsZShmaWxlLCBcInJ0XCIpIDogY2Fubm90IG9wZW4gdGhlIGNvbm5lY3Rpb25cbiJ9 -->
+<pre><code>cannot open file 'datasets/players/Player_Arsenal.csv': No such file or directoryError in file(file, &quot;rt&quot;) : cannot open the connection</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZmlsZV9wYXRocyA8LSBjKFwiUGxheWVyX0Fyc2VuYWwuY3N2XCIsXG4gICAgICAgICAgICAgICAgXCJQbGF5ZXJfQXN0b24gVmlsbGEuY3N2XCIsXG4gICAgICAgICAgICAgICAgXCJQbGF5ZXJfQm91cm5lbW91dGguY3N2XCIsXG4gICAgICAgICAgICAgICAgXCJQbGF5ZXJfQ2hlbHNlYS5jc3ZcIixcbiAgICAgICAgICAgICAgICBcIlBsYXllcl9DcnlzdGFsIFBhbGFjZS5jc3ZcIixcbiAgICAgICAgICAgICAgICBcIlBsYXllcl9FdmVydG9uLmNzdlwiLFxuICAgICAgICAgICAgICAgIFwiUGxheWVyX0xlaWNlc3RlciBDaXR5LmNzdlwiLFxuICAgICAgICAgICAgICAgIFwiUGxheWVyX0xpdmVycG9vbC5jc3ZcIixcbiAgICAgICAgICAgICAgICBcIlBsYXllcl9NYW5jaGVzdGVyIENpdHkuY3N2XCIsXG4gICAgICAgICAgICAgICAgXCJQbGF5ZXJfTWFuY2hlc3RlciBVbml0ZWQuY3N2XCIsXG4gICAgICAgICAgICAgICAgXCJQbGF5ZXJfTmV3Y2FzdGxlIFVuaXRlZC5jc3ZcIixcbiAgICAgICAgICAgICAgICBcIlBsYXllcl9Ob3J3aWNoIENpdHkuY3N2XCIsXG4gICAgICAgICAgICAgICAgXCJQbGF5ZXJfU291dGhhbXB0b24uY3N2XCIsXG4gICAgICAgICAgICAgICAgXCJQbGF5ZXJfU3Rva2UgQ2l0eS5jc3ZcIixcbiAgICAgICAgICAgICAgICBcIlBsYXllcl9TdW5kZXJsYW5kLmNzdlwiLFxuICAgICAgICAgICAgICAgIFwiUGxheWVyX1N3YW5zZWEgQ2l0eS5jc3ZcIixcbiAgICAgICAgICAgICAgICBcIlBsYXllcl9Ub3R0ZW5oYW0gSG90c3B1ci5jc3ZcIixcbiAgICAgICAgICAgICAgICBcIlBsYXllcl9XYXRmb3JkLmNzdlwiLFxuICAgICAgICAgICAgICAgIFwiUGxheWVyX1dlc3QgQnJvbXdpY2ggQWxiaW9uLmNzdlwiLFxuICAgICAgICAgICAgICAgIFwiUGxheWVyX1dlc3QgSGFtIFVuaXRlZC5jc3ZcIilcbmBgYCJ9 -->
+<pre class="r"><code>file_paths &lt;- c(&quot;Player_Arsenal.csv&quot;,
+                &quot;Player_Aston Villa.csv&quot;,
+                &quot;Player_Bournemouth.csv&quot;,
+                &quot;Player_Chelsea.csv&quot;,
+                &quot;Player_Crystal Palace.csv&quot;,
+                &quot;Player_Everton.csv&quot;,
+                &quot;Player_Leicester City.csv&quot;,
+                &quot;Player_Liverpool.csv&quot;,
+                &quot;Player_Manchester City.csv&quot;,
+                &quot;Player_Manchester United.csv&quot;,
+                &quot;Player_Newcastle United.csv&quot;,
+                &quot;Player_Norwich City.csv&quot;,
+                &quot;Player_Southampton.csv&quot;,
+                &quot;Player_Stoke City.csv&quot;,
+                &quot;Player_Sunderland.csv&quot;,
+                &quot;Player_Swansea City.csv&quot;,
+                &quot;Player_Tottenham Hotspur.csv&quot;,
+                &quot;Player_Watford.csv&quot;,
+                &quot;Player_West Bromwich Albion.csv&quot;,
+                &quot;Player_West Ham United.csv&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkxhc3QgUGxheWVycyBBdHRyaWJ1dGVzIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KYGBge3J9DQpkYXRhc2V0IDwtIHJlYWQuY3N2KGZpbGUucGF0aCgnZGF0YXNldHMnLCAnUGxheWVyX0F0dHJpYnV0ZXMuY3N2JykpDQpgYGANCg0KDQpgYGB7cn0NCnBsYXllcnNfYXR0ciA8LSBkYXRhc2V0DQpBUElfSU5ERVggPC0gMQ0KcGxheWVyc19hdHRyIDwtIHN1YnNldChwbGF5ZXJzX2F0dHIsIHNlbGVjdCA9IGMocGxheWVyX2FwaV9pZCwgZGF0ZSwgb3ZlcmFsbF9yYXRpbmcsIHBvdGVudGlhbCwgYmFsbF9jb250cm9sLCBhY2NlbGVyYXRpb24sIGRyaWJibGluZywgc3RyZW5ndGgsIGxvbmdfcGFzc2luZywgY3Jvc3NpbmcpKQ0KcGxheWVyc19hdHRyIDwtIHBsYXllcnNfYXR0cltvcmRlcihwbGF5ZXJzX2F0dHIkcGxheWVyX2FwaV9pZCksIF0NCmFwaSA8LSBmYWN0b3IocGxheWVyc19hdHRyWywgQVBJX0lOREVYXSkNCmFwaSA8LSBsZXZlbHMoYXBpKQ0KYGBgDQoNCg0KYGBge3J9DQpwb2ludCA8LSAxDQp0YWJsZSA8LSBwbGF5ZXJzX2F0dHJbMSxdDQp0YWJsZVssXSA8LSAwDQpjb3VudCA8LSAxDQpmb3IoYSBpbiBhcGkpew0KICBmb3IobnIgaW4gcG9pbnQ6bnJvdyhwbGF5ZXJzX2F0dHIpKQ0KICAgIGlmIChwbGF5ZXJzX2F0dHJbbnIsIEFQSV9JTkRFWF0gPT0gYSl7DQogICAgICBwb2ludCA8LSBucg0KICAgICAgdGFibGVbY291bnQsIF0gPC0gcGxheWVyc19hdHRyW25yLCBdDQogICAgICBjb3VudCA9IGNvdW50ICsgMSANCiAgICAgIGJyZWFrDQogICAgfQ0KfQ0KYGBgDQoNCmBgYHtyfQ0KdGFibGUgPC0gc3Vic2V0KHRhYmxlLCBzZWxlY3QgPSAtYyhkYXRlKSkNCmBgYA0KDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkxhc3QgUGxheWVycyBBdHRyaWJ1dGVzIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KYGBge3J9DQpkYXRhc2V0IDwtIHJlYWQuY3N2KGZpbGUucGF0aCgnZGF0YXNldHMnLCAnUGxheWVyX0F0dHJpYnV0ZXMuY3N2JykpDQpgYGANCg0KDQpgYGB7cn0NCnBsYXllcnNfYXR0ciA8LSBkYXRhc2V0DQpBUElfSU5ERVggPC0gMQ0KIyBwbGF5ZXJzX2F0dHIgPC0gc3Vic2V0KHBsYXllcnNfYXR0ciwgc2VsZWN0ID0gYyhwbGF5ZXJfYXBpX2lkLCBkYXRlLCBvdmVyYWxsX3JhdGluZywgcG90ZW50aWFsLCBiYWxsX2NvbnRyb2wsIGFjY2VsZXJhdGlvbiwgZHJpYmJsaW5nLCBzdHJlbmd0aCwgbG9uZ19wYXNzaW5nLCBjcm9zc2luZykpDQpwbGF5ZXJzX2F0dHIgPC0gc3Vic2V0KHBsYXllcnNfYXR0ciwgc2VsZWN0ID0gLWMoaWQsIHBsYXllcl9maWZhX2FwaV9pZCwgZGF0ZSkpDQpwbGF5ZXJzX2F0dHIgPC0gcGxheWVyc19hdHRyW29yZGVyKHBsYXllcnNfYXR0ciRwbGF5ZXJfYXBpX2lkKSwgXQ0KYXBpIDwtIGZhY3RvcihwbGF5ZXJzX2F0dHJbLCBBUElfSU5ERVhdKQ0KYXBpIDwtIGxldmVscyhhcGkpDQpgYGANCg0KDQpgYGB7cn0NCnBvaW50IDwtIDENCnRhYmxlIDwtIHBsYXllcnNfYXR0clsxLF0NCnRhYmxlWyxdIDwtIDANCmNvdW50IDwtIDENCmZvcihhIGluIGFwaSl7DQogIGZvcihuciBpbiBwb2ludDpucm93KHBsYXllcnNfYXR0cikpDQogICAgaWYgKHBsYXllcnNfYXR0cltuciwgQVBJX0lOREVYXSA9PSBhKXsNCiAgICAgIHBvaW50IDwtIG5yDQogICAgICB0YWJsZVtjb3VudCwgXSA8LSBwbGF5ZXJzX2F0dHJbbnIsIF0NCiAgICAgIGNvdW50ID0gY291bnQgKyAxIA0KICAgICAgYnJlYWsNCiAgICB9DQp9DQpgYGANCg0KYGBge3J9DQp3cml0ZSh0YWJsZSwgZmlsZS5wYXRoKCdkYXRhc2V0cycsICdsYXN0ZXN0X3BsYXllcnNfYXR0ci5jc3YnKSkNCmBgYA0KDQoNCmBgYHtyfQ0KZm9yKHBhdGggaW4gZmlsZV9wYXRocyl7DQpmaWxlX25hbWUgPC0gcGF0aA0KZmlsZSA8LSByZWFkLmNzdihmaWxlLnBhdGgoJ2RhdGFzZXRzL3BsYXllcnMnLCBmaWxlX25hbWUpKQ0KdG90YWwgPC0gbWVyZ2UocGxheWVyc19hdHRyLCBmaWxlLCBieT0icGxheWVyX2FwaV9pZCIpDQp3cml0ZS5jc3YodG90YWwsIGZpbGUucGF0aCgnZGF0YXNldHMvcGxheWVycycsIGZpbGVfbmFtZSkpDQp9DQpgYGANCg0KYGBge3J9DQpmaWxlX3BhdGhzIDwtIGMoIlBsYXllcl9BcnNlbmFsLmNzdiIsDQogICAgICAgICAgICAgICAgIlBsYXllcl9Bc3RvbiBWaWxsYS5jc3YiLA0KICAgICAgICAgICAgICAgICJQbGF5ZXJfQm91cm5lbW91dGguY3N2IiwNCiAgICAgICAgICAgICAgICAiUGxheWVyX0NoZWxzZWEuY3N2IiwNCiAgICAgICAgICAgICAgICAiUGxheWVyX0NyeXN0YWwgUGFsYWNlLmNzdiIsDQogICAgICAgICAgICAgICAgIlBsYXllcl9FdmVydG9uLmNzdiIsDQogICAgICAgICAgICAgICAgIlBsYXllcl9MZWljZXN0ZXIgQ2l0eS5jc3YiLA0KICAgICAgICAgICAgICAgICJQbGF5ZXJfTGl2ZXJwb29sLmNzdiIsDQogICAgICAgICAgICAgICAgIlBsYXllcl9NYW5jaGVzdGVyIENpdHkuY3N2IiwNCiAgICAgICAgICAgICAgICAiUGxheWVyX01hbmNoZXN0ZXIgVW5pdGVkLmNzdiIsDQogICAgICAgICAgICAgICAgIlBsYXllcl9OZXdjYXN0bGUgVW5pdGVkLmNzdiIsDQogICAgICAgICAgICAgICAgIlBsYXllcl9Ob3J3aWNoIENpdHkuY3N2IiwNCiAgICAgICAgICAgICAgICAiUGxheWVyX1NvdXRoYW1wdG9uLmNzdiIsDQogICAgICAgICAgICAgICAgIlBsYXllcl9TdG9rZSBDaXR5LmNzdiIsDQogICAgICAgICAgICAgICAgIlBsYXllcl9TdW5kZXJsYW5kLmNzdiIsDQogICAgICAgICAgICAgICAgIlBsYXllcl9Td2Fuc2VhIENpdHkuY3N2IiwNCiAgICAgICAgICAgICAgICAiUGxheWVyX1RvdHRlbmhhbSBIb3RzcHVyLmNzdiIsDQogICAgICAgICAgICAgICAgIlBsYXllcl9XYXRmb3JkLmNzdiIsDQogICAgICAgICAgICAgICAgIlBsYXllcl9XZXN0IEJyb213aWNoIEFsYmlvbi5jc3YiLA0KICAgICAgICAgICAgICAgICJQbGF5ZXJfV2VzdCBIYW0gVW5pdGVkLmNzdiIpDQpgYGANCg0K</div>
 
 
 
