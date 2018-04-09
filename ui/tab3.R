@@ -3,47 +3,47 @@ shiny::fluidRow(
          box(width = NULL,title = "Tactic",
              selectInput("PlaySpeedA", label = h5("PlaySpeed"), 
                          choices = list("Balance" = 1, "Fast" = 2, "Slow" = 3), 
-                         selected = tactic_opponent$H_buildUpPlaySpeedClass),
+                         selected = tactic_opponent$PlaySpeed),
              
              selectInput("PlayDribblingA", label = h5("PlayDribbling"), 
                          choices = list("Little" = 1, "Normal" = 2),
-                         selected = tactic_opponent$H_buildUpPlayDribblingClass),
+                         selected = tactic_opponent$PlayDribbling),
              
              selectInput("playPassingA", label = h5("playPassing"), 
                          choices = list("Long" = 1, "Mixed" = 2, "Short" = 3), 
-                         selected = tactic_opponent$H_buildUpPlayPassingClass),
+                         selected = tactic_opponent$PlayPassing),
              
              selectInput("PlayPositioningA", label = h5("PlayPositioning"), 
                          choices = list("Free Form" = 1, "Organised" = 2),
-                         selected = tactic_opponent$H_buildUpPlayPositioningClass),
+                         selected = tactic_opponent$PlayPositioning),
              
              selectInput("ChanceCreationPassingA", label = h5("ChanceCreationPassing"), 
                          choices = list("Normal" = 1, "Risky" = 2, "Safe" = 3), 
-                         selected = tactic_opponent$H_chanceCreationPassingClass),
+                         selected = tactic_opponent$Passing),
              
              selectInput("ChanceCreationCrossA", label = h5("ChanceCreationCross"), 
                          choices = list("Little" = 1, "Lots" = 2, "Normal" = 3), 
-                         selected = tactic_opponent$H_chanceCreationCrossingClass),
+                         selected = tactic_opponent$Crossing),
              
              selectInput("ChanceCreationShootingA", label = h5("ChanceCreationShooting"), 
                          choices = list("Little" = 1, "Lots" = 2, "Normal" = 3), 
-                         selected = tactic_opponent$H_chanceCreationShootingClass),
+                         selected = tactic_opponent$Shooting),
              
              selectInput("ChanceCreationPositionA", label = h5("ChanceCreationPosition"), 
                          choices = list("Free Form" = 1, "Organised" = 2), 
-                         selected = tactic_opponent$H_chanceCreationPositioningClass),
+                         selected = tactic_opponent$Positioning),
              
              selectInput("DefencePressureA", label = h5("DefencePressure"), 
                          choices = list("Deep" = 1, "High" = 2, "Medium" = 3), 
-                         selected = tactic_opponent$H_defencePressureClass),
+                         selected = tactic_opponent$Pressure),
              
              selectInput("DefenceAggressionA", label = h5("DefenceAggression"), 
                          choices = list("Contain" = 1, "Double" = 2, "Press" = 3), 
-                         selected = tactic_opponent$H_defenceAggressionClass),
+                         selected = tactic_opponent$Aggression),
              
              selectInput("DefenceTeamWidthA", label = h5("DefenceTeamWidth"), 
                          choices = list("Narrow" = 1, "Normal" = 2, "Wide" = 3), 
-                         selected = tactic_opponent$H_defenceTeamWidthClass),
+                         selected = tactic_opponent$TeamWidth),
              
              actionButton("ok", "OK"))
   ),
