@@ -9,7 +9,6 @@ shiny::fluidRow(
                                     "Leicester City" = "Leicester City", 	
                                     "Liverpool" = "Liverpool", 	
                                     "Manchester City" = "Manchester City",
-                                    "Manchester United" = "Manchester United", 	
                                     "Newcastle United" = "Newcastle United", 	
                                     "Norwich City" = "Norwich City", 	
                                     "Southampton" = "Southampton", 	

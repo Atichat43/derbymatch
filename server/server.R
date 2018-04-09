@@ -170,3 +170,20 @@ output$dataInfo <- renderPrint({
 })
 
 
+output$player_group <- renderUI({
+  playerList <- toStringPlayers(getPlayers(input$opponent_select))
+  tempText <- paste(input$opponent_select,"'s Player")
+  checkboxGroupInput("checkGroup", label = h3(tempText), 
+                     choices = playerList,
+                     selected = playerList[1:11]
+  )
+})
+
+output$Homeplayer<- renderUI({
+  playerList <- toStringPlayers(getPlayers("Manchester United"))
+  checkboxGroupInput("checkGroup", label = h3("Manchester United's Player"), 
+                     choices = playerList,
+                     selected = playerList[1:11]
+  )
+})
+
