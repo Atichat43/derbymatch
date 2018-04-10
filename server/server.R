@@ -193,3 +193,5 @@ output$Homeplayer<- renderUI({
   )
 })
 output$HomeApi <- renderTable({input$HomePlayerGroup})
+
+

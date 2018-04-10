@@ -18,7 +18,7 @@ ui <- dashboardPage(
       ),
       #fourth tab
       tabItem(tabName = "summary",
-              h2("MANCHESTER UNITED WIN")
+              source(file.path("ui", "tab4.R"),  local = TRUE)$value
       ),
       #fifth tab
       tabItem(tabName = "prediction",
