@@ -46,7 +46,7 @@ toStringPlayers <- function(players, n = 3){
 apiPlayers <- function(players){
   api <- as.array(as.character(1:nrow(players)))
   for(nr in 1:nrow(players)){
-    api[nr] <- as.character(players[nr, 2])
+    api[nr] <- as.character(players$player_api_id[nr])
   }
   return(api)
 }

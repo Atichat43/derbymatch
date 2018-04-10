@@ -44,7 +44,8 @@ write(table, file.path('datasets', 'lastest_players_attr.csv'))
 for(path in file_paths){
 file_name <- path
 file <- read.csv(file.path('datasets/players', file_name))
-total <- merge(players_attr, file, by="player_api_id")
+total <- merge(file, table, by="player_api_id")
+total <- total[order(total$id), ]
 write.csv(total, file.path('datasets/players', file_name))
 }
 ```
