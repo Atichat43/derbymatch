@@ -193,5 +193,18 @@ output$Homeplayer<- renderUI({
   )
 })
 output$HomeApi <- renderTable({input$HomePlayerGroup})
+output$playerlist <- renderTable({toStringPlayers(getPlayers("Manchester United",renderTable({input$HomePlayerGroup})))})
 
-
+#tab 4 by mighty
+output$selected_players <- renderUI({
+  HomeApi2 <- renderTable({input$HomePlayerGroup})
+  
+  playerlist <- toStringPlayers(getPlayers("Manchester United",HomeApi2))
+  apiList <- renderTable({input$HomePlayerGroup})
+  
+  radioButtons("rb_players", "Choose one:",
+               choiceNames = playerlist,
+               choiceValues = apiList)
+  
+  
+})
