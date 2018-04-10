@@ -11,9 +11,21 @@ getDataset <- function(){
   return(DATASET)
 }
 
-getPlayers <- function(teamName){
+getPlayers <- function(teamName, lst_api = c("")){
   table_players <- read.csv(file.path('datasets', 'players', paste('Player_', teamName, '.csv', sep="")))
   #table_players <- subset(table_players, select = c(player_name, player_position, player_number))
+  if(!is.null(nrow(lst_api))){
+    temp <- table_players[1,]
+    for(nr in 1:nrow(lst_api)){
+      for(i in 1:nrow(table_players)){
+        if(lst_api[nr, 1] == table_players$player_api_id[i]){
+          temp[nr, ] <- table_players[i, ]
+          break
+        }
+      }
+    }
+    return(temp)
+  }
   return(table_players)
 }
 
@@ -34,7 +46,7 @@ toStringPlayers <- function(players, n = 3){
 apiPlayers <- function(players){
   api <- as.array(as.character(1:nrow(players)))
   for(nr in 1:nrow(players)){
-    api[nr] <- as.character(players[nr, 2])
+    api[nr] <- as.character(players$player_api_id[nr])
   }
   return(api)
 }
