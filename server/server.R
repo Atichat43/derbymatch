@@ -195,7 +195,7 @@ output$Homeplayer<- renderUI({
 output$HomeApi <- renderTable({input$HomePlayerGroup})
 output$playerlist <- renderTable({toStringPlayers(getPlayers("Manchester United",renderTable({input$HomePlayerGroup})))})
 
-#tab 4 by mighty
+#tab 4 by mighty not done yet
 output$selected_players <- renderUI({
   HomeApi2 <- renderTable({input$HomePlayerGroup})
   
@@ -208,3 +208,15 @@ output$selected_players <- renderUI({
   
   
 })
+#mock up
+labs <- c("Dribbing", "Long shot", "Acceleration",
+          "Strength",  "Stamina", "Crossing")
+
+scores <- list(
+  "Mata" = c(90, 75, 75, 70, 70, 65),
+  "Ramsey" = c(80, 50, 75, 65, 67, 95)
+)
+output$radar<- renderChartJSRadar({
+  chartJSRadar(scores = scores, labs = labs, maxScale = 100)
+})
+
