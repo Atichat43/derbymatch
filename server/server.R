@@ -169,7 +169,7 @@ output$dataInfo <- renderPrint({
     vals$data
 })
 
-
+#ui away player
 output$Awayplayer <- renderUI({
   playerList <- toStringPlayers(getPlayers(input$opponent_select))
   apiList <- apiPlayers(getPlayers(input$opponent_select))
@@ -180,9 +180,8 @@ output$Awayplayer <- renderUI({
                      selected = apiList[1:11]
   )
 })
-output$AwayApi <- renderTable({input$AwayPlayerGroup})
 
-
+#ui home player
 output$Homeplayer<- renderUI({
   playerList <- toStringPlayers(getPlayers("Manchester United"))
   apiList <- apiPlayers(getPlayers("Manchester United"))
@@ -192,22 +191,24 @@ output$Homeplayer<- renderUI({
                      selected = apiList[1:11]
   )
 })
-output$HomeApi <- renderTable({input$HomePlayerGroup})
-output$playerlist <- renderTable({toStringPlayers(getPlayers("Manchester United",renderTable({input$HomePlayerGroup})))})
 
 #tab 4 by mighty not done yet
-output$selected_players <- renderUI({
-  HomeApi2 <- renderTable({input$HomePlayerGroup})
-  
-  playerlist <- toStringPlayers(getPlayers("Manchester United",HomeApi2))
-  apiList <- renderTable({input$HomePlayerGroup})
-  
-  radioButtons("rb_players", "Choose one:",
+output$selected_Hplayers <- renderUI({
+  playerlist <- toStringPlayers(getPlayers("Manchester United",input$HomePlayerGroup))
+
+  radioButtons("rbH_players", "Choose one:",
                choiceNames = playerlist,
-               choiceValues = apiList)
-  
-  
+               choiceValues = input$HomePlayerGroup)
 })
+
+output$selected_Aplayers <- renderUI({
+  playerlist <- toStringPlayers(getPlayers(input$opponent_select,input$AwayPlayerGroup))
+  
+  radioButtons("rbA_players", "Choose one:",
+               choiceNames = playerlist,
+               choiceValues = input$AwayPlayerGroup)
+})
+
 #mock up
 labs <- c("Dribbing", "Long shot", "Acceleration",
           "Strength",  "Stamina", "Crossing")
