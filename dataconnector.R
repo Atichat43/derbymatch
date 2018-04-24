@@ -14,7 +14,8 @@ getDataset <- function(){
 getPlayers <- function(teamName, lst_api = c("")){
   table_players <- read.csv(file.path('datasets', 'players', paste('Player_', teamName, '.csv', sep="")))
   #table_players <- subset(table_players, select = c(player_name, player_position, player_number))
-  if(!is.null(nrow(lst_api))){
+  if(lst_api != ""){
+    lst_api <- as.data.frame(lst_api)
     temp <- table_players[1,]
     for(nr in 1:nrow(lst_api)){
       for(i in 1:nrow(table_players)){
@@ -28,6 +29,21 @@ getPlayers <- function(teamName, lst_api = c("")){
   }
   return(table_players)
 }
+
+
+getPlayerStat <- function(teamName, api){
+  table_players <- read.csv(file.path('datasets', 'players', paste('Player_', teamName, '.csv', sep="")))
+  temp <- table_players[1, ]
+  for(nr in 1:nrow(table_players)){
+    if(api == table_players$player_api_id[nr]){
+      temp <- table_players[nr, ]
+      break
+    }
+  }
+  temp <- subset(temp, select = c("dribbling", "long_shots", "acceleration", "strength", "stamina", "crossing"))
+  return(temp)
+}
+
 
 toStringPlayers <- function(players, n = 3){
   arr <- as.array(as.character(1:nrow(players)))
