@@ -209,15 +209,14 @@ output$selected_Aplayers <- renderUI({
                choiceValues = input$AwayPlayerGroup)
 })
 
-#mock up
-labs <- c("Dribbing", "Long shot", "Acceleration",
-          "Strength",  "Stamina", "Crossing")
-
-scores <- list(
-  "Mata" = c(90, 75, 75, 70, 70, 65),
-  "Ramsey" = c(80, 50, 75, 65, 67, 95)
-)
 output$radar<- renderChartJSRadar({
-  chartJSRadar(scores = scores, labs = labs, maxScale = 100)
+  labs <- c("Dribbing","Long shot","Acceleration","Strength","Stamina","Crossing")
+  p1 <- getPlayerStat("Manchester United",input$rbH_players)
+  p2 <- getPlayerStat(input$opponent_select,input$rbA_players)
+  scores <- list(
+    "Home's player" = c(c(p1$dribbling), c(p1$long_shots), c(p1$acceleration),c(p1$strength),c(p1$stamina),c(p1$crossing)),
+    "Away's player" = c(c(p2$dribbling), c(p2$long_shots), c(p2$acceleration),c(p2$strength),c(p2$stamina),c(p2$crossing))
+  )
+  chartJSRadar(scores = scores,labs = labs, maxScale = 100)
 })
 
