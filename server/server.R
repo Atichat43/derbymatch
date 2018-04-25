@@ -214,7 +214,7 @@ labs <- c("Dribbing", "Long shot", "Acceleration",
           "Strength",  "Stamina", "Crossing")
 
 scores <- list(
-  "Mata" = c(90, 75, 75, 70, 70, 65),
+  "Mata" = getPlayerStat("Manchester United",input$rbH_players)
   "Ramsey" = c(80, 50, 75, 65, 67, 95)
 )
 output$radar<- renderChartJSRadar({
