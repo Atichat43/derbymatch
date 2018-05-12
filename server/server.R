@@ -45,8 +45,7 @@ output$DefenceTeamWidth<- renderText({
 #generate tactic for away team  
 output$select_input_Away <- renderUI({
   tactic <- getTactic(getTeamApi(input$opponent_select))
-  
-  tagList(
+  tagList(title = h3("Away Tactic"),
     selectInput("PlaySpeed", label = h5("PlaySpeed"), 
                 choices = list("Balance" = 1, "Fast" = 2, "Slow" = 3), 
                 selected = tactic$PlaySpeed),
@@ -65,8 +64,13 @@ output$select_input_Away <- renderUI({
     
     selectInput("ChanceCreationPassing", label = h5("ChanceCreationPassing"), 
                 choices = list("Normal" = 1, "Risky" = 2, "Safe" = 3), 
-                selected = tactic$Passing),
-    
+                selected = tactic$Passing)
+  )
+})
+
+output$select_input_Away2 <- renderUI({
+  tactic <- getTactic(getTeamApi(input$opponent_select))
+  tagList(
     selectInput("ChanceCreationCross", label = h5("ChanceCreationCross"), 
                 choices = list("Little" = 1, "Lots" = 2, "Normal" = 3), 
                 selected = tactic$Crossing),
@@ -174,7 +178,7 @@ output$Awayplayer <- renderUI({
   playerList <- toStringPlayers(getPlayers(input$opponent_select))
   apiList <- apiPlayers(getPlayers(input$opponent_select))
   tempText <- paste(input$opponent_select,"'s Player")
-  checkboxGroupInput("AwayPlayerGroup", label = h3(tempText), 
+  checkboxGroupInput("AwayPlayerGroup", label = h5(tempText), 
                      choiceNames = playerList,
                      choiceValues = apiList,
                      selected = apiList[1:11]
@@ -185,7 +189,7 @@ output$Awayplayer <- renderUI({
 output$Homeplayer<- renderUI({
   playerList <- toStringPlayers(getPlayers("Manchester United"))
   apiList <- apiPlayers(getPlayers("Manchester United"))
-  checkboxGroupInput("HomePlayerGroup", label = h3("Manchester United's Player"), 
+  checkboxGroupInput("HomePlayerGroup", label = h5("Manchester United's Player"), 
                      choiceNames = playerList,
                      choiceValues = apiList,
                      selected = apiList[1:11]
@@ -195,7 +199,6 @@ output$Homeplayer<- renderUI({
 #tab 4 by mighty not done yet
 output$selected_Hplayers <- renderUI({
   playerlist <- toStringPlayers(getPlayers("Manchester United",input$HomePlayerGroup))
-
   radioButtons("rbH_players", "Choose one:",
                choiceNames = playerlist,
                choiceValues = input$HomePlayerGroup)
@@ -203,7 +206,6 @@ output$selected_Hplayers <- renderUI({
 
 output$selected_Aplayers <- renderUI({
   playerlist <- toStringPlayers(getPlayers(input$opponent_select,input$AwayPlayerGroup))
-  
   radioButtons("rbA_players", "Choose one:",
                choiceNames = playerlist,
                choiceValues = input$AwayPlayerGroup)
