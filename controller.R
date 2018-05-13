@@ -44,19 +44,15 @@ getPlayers <- function(team_name, lst_api = c("")){
   return(table_players)
 }
 
-getPlayerStat <- function(team_name, api){
+getPlayerStat <- function(team_name, player_api){
   table_players <- getPlayersTable(team_name)
-  temp <- table_players[1, ]
+  table_players <- subset(table_players, select = c("player_api_id", "dribbling", "long_shots", "acceleration", "strength", "stamina", "crossing"))
   for(nr in 1:nrow(table_players)){
-    if(api == table_players$player_api_id[nr]){
-      temp <- table_players[nr, ]
-      break
+    if(player_api == table_players$player_api_id[nr]){
+      return(table_players[nr, -1])
     }
   }
-  temp <- subset(temp, select = c("dribbling", "long_shots", "acceleration", "strength", "stamina", "crossing"))
-  return(temp)
 }
-
 ###############################################################################################################
 toStringApiPlayers <- function(df_players){
   n_players <- nrow(df_players)
