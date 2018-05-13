@@ -9,7 +9,7 @@ ui <-
 }
 
 server <- 
-  function(input, output) {
+  function(input, output, session) {
     source(file.path("server", "server.R"),  local = TRUE)$value
 }
 

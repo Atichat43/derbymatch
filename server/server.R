@@ -40,8 +40,6 @@ output$DefenceTeamWidth<- renderText({
   paste("DefenceTeamWidth",input$DefenceTeamWidth)
 })
 
-
-
 #generate tactic for away team  
 output$select_input_Away <- renderUI({
   tactic <- getTactic(getTeamApi(input$opponent_select))  #Controller:: getTactic getTeamApi
@@ -142,18 +140,38 @@ output$DefenceTeamWidthA<- renderText({
   
 })
 
+
+#global var
+home_team_player_list <- toStringPlayersChoices(getPlayers("Manchester United")) #toStringPlayersChoices, getPlayers
+home_team_api_list <- toStringApiPlayers(getPlayers("Manchester United"))
+home_team_api_list_check <- home_team_api_list[1:11]
 ##########################################################################################################
 ##########################################################################################################
 #ui home player
-output$Homeplayer<- renderUI({
-  playerList <- toStringPlayersChoices(getPlayers("Manchester United")) #toStringPlayersChoices, getPlayers
-  apiList <- toStringApiPlayers(getPlayers("Manchester United")) #getPlayers, toStringApiPlayers
+output$Homeplayer<- renderUI({ 
+   #getPlayers, toStringApiPlayers
   checkboxGroupInput("HomePlayerGroup", label = h5("Manchester United's Player"), 
-                     choiceNames = playerList,
-                     choiceValues = apiList,
-                     selected = apiList[1:11]
+                     choiceNames = home_team_player_list,
+                     choiceValues = home_team_api_list,
+                     selected = home_team_api_list_check
   )
 })
+
+observeEvent(input$HomePlayerGroup, {
+  print(home_team_api_list_check)
+  print(input$HomePlayerGroup)
+  if(length(input$HomePlayerGroup) > 11){
+    lst_check <- home_team_api_list_check
+    updateCheckboxGroupInput(session=session,
+                             inputId = "HomePlayerGroup", 
+                             choiceNames = home_team_player_list,
+                             choiceValues = home_team_api_list,
+                             selected = lst_check)
+  }
+  else{
+    home_team_api_list_check <<- input$HomePlayerGroup
+  }
+}, ignoreNULL = FALSE)
 
 #ui away player
 output$Awayplayer <- renderUI({
