@@ -37,7 +37,6 @@ output$DefenceAggretion<- renderText({
 
 output$DefenceTeamWidth<- renderText({
   paste("DefenceTeamWidth",input$DefenceTeamWidth)
-  
 })
 
 
@@ -137,31 +136,6 @@ output$DefenceAggretionA<- renderText({
 
 output$DefenceTeamWidthA<- renderText({
   paste("DefenceTeamWidth",input$DefenceTeamWidthA)
-  
-})
-
-vals <- reactiveValues(data = NULL)
-dataModal <- function(failed = FALSE) {
-  modalDialog(
-    selectInput("dataset", "Select Data",getData(""),selected="Name 1" ,multiple = FALSE),
-    span('(select one player)'),
-    
-    footer = tagList(
-      modalButton("Cancel"),
-      actionButton("ok", "OK")
-    )
-  )
-}
-
-lapply(1:11,function(i){
-  observeEvent(input[[paste0("show",i)]], {
-    showModal(dataModal())
-  })
-})
-
-observeEvent(input$ok, {
-  vals$data <- ({input$dataset})
-  removeModal()
   
 })
 

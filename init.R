@@ -3,8 +3,10 @@ library(shiny) #Ui: main
 library(radarchart) #Ui: radar chart
 #library(caret) # createFolds, createDataPartition
 
+MANUNITED_API <- 10260
+
 source('dataconnector.R')
-source(file.path("functions", "functions.R"))
+source('controller.R')
 source(file.path("model", "model.R"))
 source(file.path("model", "predictor.R"))
 

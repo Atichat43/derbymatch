@@ -1,33 +1,33 @@
-team <-c("Arsenal" = "Arsenal",
-     "Aston Villa" = "Aston Villa", 	
-     "Bournemouth" = "Bournemouth", 	
-     "Chelsea" = "Chelsea",
-     "Crystal Palace" = "Crystal Palace", 	
-     "Everton" = "Everton", 	
-     "Leicester City" = "Leicester City", 	
-     "Liverpool" = "Liverpool", 	
-     "Manchester City" = "Manchester City",
-     "Newcastle United" = "Newcastle United", 	
-     "Norwich City" = "Norwich City", 	
-     "Southampton" = "Southampton", 	
-     "Stoke City" = "Stoke City",
-     "Sunderland" = "Sunderland", 	
-     "Swansea City" = "Swansea City", 	
-     "Tottenham Hotspur" = "Tottenham Hotspur",
-     "Watford" = "Watford", 	
-     "West Bromwich Albion" = "West Bromwich Albion", 	
-     "West Ham United" = "West Ham United")
+TEAM_CHOICES <-c("Arsenal" = "Arsenal",
+                 "Aston Villa" = "Aston Villa", 	
+                 "Bournemouth" = "Bournemouth", 	
+                 "Chelsea" = "Chelsea",
+                 "Crystal Palace" = "Crystal Palace", 	
+                 "Everton" = "Everton", 	
+                 "Leicester City" = "Leicester City", 	
+                 "Liverpool" = "Liverpool", 	
+                 "Manchester City" = "Manchester City",
+                 "Newcastle United" = "Newcastle United", 	
+                 "Norwich City" = "Norwich City", 	
+                 "Southampton" = "Southampton", 	
+                 "Stoke City" = "Stoke City",
+                 "Sunderland" = "Sunderland", 	
+                 "Swansea City" = "Swansea City", 	
+                 "Tottenham Hotspur" = "Tottenham Hotspur",
+                 "Watford" = "Watford", 	
+                 "West Bromwich Albion" = "West Bromwich Albion", 	
+                 "West Ham United" = "West Ham United")
 
 fluidRow(
   column(4, wellPanel(
     id = "leftPanel",
     div(
         id = "opponentTeamPanel",
-        selectInput("opponent_select", label = h3("Select Team"),team)
+        selectInput("opponent_select", label = h3("Select Team"), TEAM_CHOICES)
     ),
     div(
       id = "appDesc",
-      h2("WIN")
+      h2("WIN") #result: predictMatch
     )
   )),
   
