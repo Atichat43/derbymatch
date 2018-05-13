@@ -144,8 +144,8 @@ output$DefenceTeamWidthA<- renderText({
 ##########################################################################################################
 #ui home player
 output$Homeplayer<- renderUI({
-  playerList <- toStringPlayers(getPlayers("Manchester United")) #toStringPlayers, getPlayers
-  apiList <- apiPlayers(getPlayers("Manchester United"))
+  playerList <- toStringPlayersChoices(getPlayers("Manchester United")) #toStringPlayersChoices, getPlayers
+  apiList <- toStringApiPlayers(getPlayers("Manchester United")) #getPlayers, toStringApiPlayers
   checkboxGroupInput("HomePlayerGroup", label = h5("Manchester United's Player"), 
                      choiceNames = playerList,
                      choiceValues = apiList,
@@ -155,8 +155,8 @@ output$Homeplayer<- renderUI({
 
 #ui away player
 output$Awayplayer <- renderUI({
-  playerList <- toStringPlayers(getPlayers(input$opponent_select)) #toStringPlayers, getPlayers
-  apiList <- apiPlayers(getPlayers(input$opponent_select))
+  playerList <- toStringPlayersChoices(getPlayers(input$opponent_select)) #toStringPlayersChoices, getPlayers
+  apiList <- toStringApiPlayers(getPlayers(input$opponent_select))  #getPlayers, toStringApiPlayers
   tempText <- paste(input$opponent_select,"'s Player")
   checkboxGroupInput("AwayPlayerGroup", label = h5(tempText), 
                      choiceNames = playerList,
@@ -169,14 +169,14 @@ output$Awayplayer <- renderUI({
 ##########################################################################################################
 #SUMMARY
 output$selected_Hplayers <- renderUI({
-  playerlist <- toStringPlayers(getPlayers("Manchester United", input$HomePlayerGroup))  #toStringPlayers, getPlayers
+  playerlist <- toStringPlayersChoices(getPlayers("Manchester United", input$HomePlayerGroup))  #toStringPlayersChoices, getPlayers
   radioButtons("rbH_players", "Choose one:",
                choiceNames = playerlist,
                choiceValues = input$HomePlayerGroup)
 })
 
 output$selected_Aplayers <- renderUI({
-  playerlist <- toStringPlayers(getPlayers(input$opponent_select, input$AwayPlayerGroup))  #toStringPlayers, getPlayers
+  playerlist <- toStringPlayersChoices(getPlayers(input$opponent_select, input$AwayPlayerGroup))  #toStringPlayersChoices, getPlayers
   radioButtons("rbA_players", "Choose one:",
                choiceNames = playerlist,
                choiceValues = input$AwayPlayerGroup)
