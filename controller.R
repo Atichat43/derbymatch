@@ -44,6 +44,9 @@ getPlayers <- function(team_name, lst_api = c("")){
 }
 
 getPlayerStat <- function(team_name, player_api){
+  if(is.null(player_api)){
+    return(NULL)
+  }
   table_players <- getPlayersTable(team_name)
   table_players <- subset(table_players, select = c("player_api_id", "dribbling", "long_shots", "acceleration", "strength", "stamina", "crossing"))
   for(nr in 1:nrow(table_players)){
@@ -63,6 +66,9 @@ toStringApiPlayers <- function(df_players){
 }
 
 toStringPlayersChoices <- function(df_players){
+  if(is.null(df_players)){
+    return('')
+  }
   df_players <- subset(df_players, select=c('player_name', 'player_position', 'player_number'))
   df_players <- apply(df_players, 2, as.character)
   n_players <- nrow(df_players)

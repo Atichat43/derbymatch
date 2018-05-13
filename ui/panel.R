@@ -94,7 +94,8 @@ fluidRow(
                                  selected = tactic$TeamWidth)
                  )),
           column(width = 4,
-                 box(width = NULL, title = "Select 11 players",
+                 box(width = NULL, 
+                     title = "Select 11 players",
                      hr(class='my-4'),
                      uiOutput(outputId = "Homeplayer")
                  ))

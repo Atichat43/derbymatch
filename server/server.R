@@ -1,5 +1,6 @@
 ##############################################################################################
 #render tactic OUR TEAM
+#global number of players 
 output$PlaySpeed<- renderText({
   paste("PlaySpeed",input$PlaySpeed)
 })
@@ -39,6 +40,12 @@ output$DefenceAggretion<- renderText({
 output$DefenceTeamWidth<- renderText({
   paste("DefenceTeamWidth",input$DefenceTeamWidth)
 })
+
+####
+observeEvent(input$opponent_select,{
+  print('update')
+  }
+)
 
 #generate tactic for away team  
 output$select_input_Away <- renderUI({
@@ -150,8 +157,7 @@ away_team_api_list_check <- NULL
 ##########################################################################################################
 ##########################################################################################################
 #ui home player
-output$Homeplayer<- renderUI({ 
-   #getPlayers, toStringApiPlayers
+output$Homeplayer<- renderUI({
   checkboxGroupInput("HomePlayerGroup", label = h5("Manchester United's Player"), 
                      choiceNames = home_team_players,
                      choiceValues = home_team_apis,
@@ -161,6 +167,7 @@ output$Homeplayer<- renderUI({
 
 observeEvent(input$HomePlayerGroup, {
   if(length(input$HomePlayerGroup) > 11){
+    showNotification("Please select 11 players only.", type='warning', duration=2)
     updateCheckboxGroupInput(session=session,
                              inputId = "HomePlayerGroup", 
                              choiceNames = home_team_players,
@@ -185,9 +192,8 @@ output$Awayplayer <- renderUI({
 })
 
 observeEvent(input$AwayPlayerGroup, {
-  print(input$AwayPlayerGroup)
   if(length(input$AwayPlayerGroup) > 11){
-    print("in")
+    showNotification("Please select 11 players only.", type='warning', duration=2)
     away_team_players <- toStringPlayersChoices(getPlayers(input$opponent_select)) #toStringPlayersChoices, getPlayers
     away_team_apis <- toStringApiPlayers(getPlayers(input$opponent_select))  #getPlayers, toStringApiPlayers
     updateCheckboxGroupInput(session=session,
@@ -197,7 +203,6 @@ observeEvent(input$AwayPlayerGroup, {
                              selected = away_team_api_list_check)
   }
   else if(length(input$AwayPlayerGroup) > 0){
-    print("update")
     away_team_api_list_check <<- input$AwayPlayerGroup
   }
   else if(length(input$AwayPlayerGroup) == 0){
@@ -219,7 +224,7 @@ output$selected_Hplayers <- renderUI({
 })
 
 output$selected_Aplayers <- renderUI({
-  playerlist <- toStringPlayersChoices(getPlayers(input$opponent_select, input$AwayPlayerGroup))  #toStringPlayersChoices, getPlayers
+  playerlist <- toStringPlayersChoices(getPlayers(input$opponent_select, input$AwayPlayerGroup)) #toStringPlayersChoices, getPlayers
   radioButtons("rbA_players", "Choose one:",
                choiceNames = playerlist,
                choiceValues = input$AwayPlayerGroup)
@@ -228,12 +233,20 @@ output$selected_Aplayers <- renderUI({
 #Radar Chart
 output$radar<- renderChartJSRadar({
   p1 <- getPlayerStat("Manchester United", input$rbH_players)  #getPlayerStat
-  p2 <- getPlayerStat(input$opponent_select, input$rbA_players)
-  scores <- list(
-    "Home's player" = c(c(p1$dribbling), c(p1$long_shots), c(p1$acceleration), c(p1$strength), c(p1$stamina), c(p1$crossing)),
-    "Away's player" = c(c(p2$dribbling), c(p2$long_shots), c(p2$acceleration), c(p2$strength), c(p2$stamina), c(p2$crossing))
-  )
-  labs <- c("Dribbing", "Long shot", "Acceleration", "Strength", "Stamina", "Crossing")
-  chartJSRadar(scores = scores, labs = labs, maxScale = 100)
+  if(is.null(input$rbA_players)){
+    h2('Loading...')
+  }
+  else{
+    p2 <- getPlayerStat(input$opponent_select, input$rbA_players)
+    if(is.null(p2)){
+      h2('Loading...')
+    }
+    scores <- list(
+      "Home's player" = c(c(p1$dribbling), c(p1$long_shots), c(p1$acceleration), c(p1$strength), c(p1$stamina), c(p1$crossing)),
+      "Away's player" = c(c(p2$dribbling), c(p2$long_shots), c(p2$acceleration), c(p2$strength), c(p2$stamina), c(p2$crossing))
+    )
+    labs <- c("Dribbing", "Long shot", "Acceleration", "Strength", "Stamina", "Crossing")
+    chartJSRadar(scores = scores, labs = labs, maxScale = 100)
+  }
 })
 
