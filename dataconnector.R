@@ -1,14 +1,29 @@
 # DATA CONNECTOR
-OUR_TEAM <- read.csv("./datasets/ManU_player.csv")
-DATASET <- read.csv(file.path('datasets', 'data_ngoals_percent_numeric.csv'))
-team_api_name <- read.csv(file.path('datasets', 'Team_api_name.csv'))
-
-getOurTeam <- function(){
-  return(OUR_TEAM)
-}
+DATASET <- read.csv(file.path('datasets', 'Dataset_Numeric.csv'))
+TABLE_TEAM_APINAME <- read.csv(file.path('datasets', 'Team_ApiName.csv'))
 
 getDataset <- function(){
   return(DATASET)
+}
+
+getTeamApiName <- function(team_name, team_api_name=TABLE_TEAM_APINAME){
+  return(team_api_name[which(team_api_name$team_long_name == team_name), ]$team_api_id)
+}
+
+getLastTactic <- function(team_api, dataset=DATASET){
+  start_ncol_h <- which(colnames(dataset[1, ]) == "H_buildUpPlaySpeedClass")
+  start_ncol_a <- which(colnames(dataset[1, ]) == "A_buildUpPlaySpeedClass")
+  for(nr in nrow(dataset):1){
+    if(dataset$home_team_api_id[nr] == team_api && dataset$away_team_api_id[nr] == MANUNITED_API){
+      last_tactic <- dataset[nr, start_ncol_h:(start_ncol_h + 10)]
+      break
+    }  
+    else if(dataset$away_team_api_id[nr] == team_api && dataset$home_team_api_id[nr] == MANUNITED_API){
+      last_tactic <- dataset[nr, start_ncol_h:(start_ncol_h+10)]
+      break
+    }
+  }
+  return(last_tactic)
 }
 
 getPlayers <- function(teamName, lst_api = c("")){

@@ -1,4 +1,5 @@
-#render tactic
+##############################################################################################
+#render tactic OUR TEAM
 output$PlaySpeed<- renderText({
   paste("PlaySpeed",input$PlaySpeed)
 })
@@ -43,7 +44,7 @@ output$DefenceTeamWidth<- renderText({
 
 #generate tactic for away team  
 output$select_input_Away <- renderUI({
-  tactic <- getTactic(getTeamApi(input$opponent_select))
+  tactic <- getTactic(getTeamApi(input$opponent_select))  #Controller:: getTactic getTeamApi
   tagList(title = h3("Away Tactic"),
     selectInput("PlaySpeed", label = h5("PlaySpeed"), 
                 choices = list("Balance" = 1, "Fast" = 2, "Slow" = 3), 
@@ -68,7 +69,7 @@ output$select_input_Away <- renderUI({
 })
 
 output$select_input_Away2 <- renderUI({
-  tactic <- getTactic(getTeamApi(input$opponent_select))
+  tactic <- getTactic(getTeamApi(input$opponent_select))   #Controller:: getTactic getTeamApi
   tagList(
     selectInput("ChanceCreationCross", label = h5("ChanceCreationCross"), 
                 choices = list("Little" = 1, "Lots" = 2, "Normal" = 3), 
@@ -96,7 +97,7 @@ output$select_input_Away2 <- renderUI({
   )
 })
 
-
+#####################################################################################################
 #render tactic Away Team
 output$PlaySpeedA<- renderText({
   paste("PlaySpeed",input$PlaySpeedA)
@@ -139,17 +140,22 @@ output$DefenceTeamWidthA<- renderText({
   
 })
 
-# Display information about selected data
-output$dataInfo <- renderPrint({
-  if (is.null(vals$data))
-    "No data selected"
-  else
-    vals$data
+##########################################################################################################
+##########################################################################################################
+#ui home player
+output$Homeplayer<- renderUI({
+  playerList <- toStringPlayers(getPlayers("Manchester United")) #toStringPlayers, getPlayers
+  apiList <- apiPlayers(getPlayers("Manchester United"))
+  checkboxGroupInput("HomePlayerGroup", label = h5("Manchester United's Player"), 
+                     choiceNames = playerList,
+                     choiceValues = apiList,
+                     selected = apiList[1:11]
+  )
 })
 
 #ui away player
 output$Awayplayer <- renderUI({
-  playerList <- toStringPlayers(getPlayers(input$opponent_select))
+  playerList <- toStringPlayers(getPlayers(input$opponent_select)) #toStringPlayers, getPlayers
   apiList <- apiPlayers(getPlayers(input$opponent_select))
   tempText <- paste(input$opponent_select,"'s Player")
   checkboxGroupInput("AwayPlayerGroup", label = h5(tempText), 
@@ -159,40 +165,32 @@ output$Awayplayer <- renderUI({
   )
 })
 
-#ui home player
-output$Homeplayer<- renderUI({
-  playerList <- toStringPlayers(getPlayers("Manchester United"))
-  apiList <- apiPlayers(getPlayers("Manchester United"))
-  checkboxGroupInput("HomePlayerGroup", label = h5("Manchester United's Player"), 
-                     choiceNames = playerList,
-                     choiceValues = apiList,
-                     selected = apiList[1:11]
-  )
-})
-
-#tab 4 by mighty not done yet
+##########################################################################################################
+##########################################################################################################
+#SUMMARY
 output$selected_Hplayers <- renderUI({
-  playerlist <- toStringPlayers(getPlayers("Manchester United",input$HomePlayerGroup))
+  playerlist <- toStringPlayers(getPlayers("Manchester United", input$HomePlayerGroup))  #toStringPlayers, getPlayers
   radioButtons("rbH_players", "Choose one:",
                choiceNames = playerlist,
                choiceValues = input$HomePlayerGroup)
 })
 
 output$selected_Aplayers <- renderUI({
-  playerlist <- toStringPlayers(getPlayers(input$opponent_select,input$AwayPlayerGroup))
+  playerlist <- toStringPlayers(getPlayers(input$opponent_select, input$AwayPlayerGroup))  #toStringPlayers, getPlayers
   radioButtons("rbA_players", "Choose one:",
                choiceNames = playerlist,
                choiceValues = input$AwayPlayerGroup)
 })
 
+#Radar Chart
 output$radar<- renderChartJSRadar({
-  labs <- c("Dribbing","Long shot","Acceleration","Strength","Stamina","Crossing")
-  p1 <- getPlayerStat("Manchester United",input$rbH_players)
-  p2 <- getPlayerStat(input$opponent_select,input$rbA_players)
+  p1 <- getPlayerStat("Manchester United", input$rbH_players)  #getPlayerStat
+  p2 <- getPlayerStat(input$opponent_select, input$rbA_players)
   scores <- list(
-    "Home's player" = c(c(p1$dribbling), c(p1$long_shots), c(p1$acceleration),c(p1$strength),c(p1$stamina),c(p1$crossing)),
-    "Away's player" = c(c(p2$dribbling), c(p2$long_shots), c(p2$acceleration),c(p2$strength),c(p2$stamina),c(p2$crossing))
+    "Home's player" = c(c(p1$dribbling), c(p1$long_shots), c(p1$acceleration), c(p1$strength), c(p1$stamina), c(p1$crossing)),
+    "Away's player" = c(c(p2$dribbling), c(p2$long_shots), c(p2$acceleration), c(p2$strength), c(p2$stamina), c(p2$crossing))
   )
-  chartJSRadar(scores = scores,labs = labs, maxScale = 100)
+  labs <- c("Dribbing", "Long shot", "Acceleration", "Strength", "Stamina", "Crossing")
+  chartJSRadar(scores = scores, labs = labs, maxScale = 100)
 })
 
