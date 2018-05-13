@@ -1,3 +1,3 @@
-dashboardHeader(
+headerPanel(
   title = "Derby Match Simulator"
 )
