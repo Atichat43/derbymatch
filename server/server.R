@@ -46,6 +46,7 @@ output$DefenceTeamWidth<- renderText({
 output$select_input_Away <- renderUI({
   tactic <- getTactic(getTeamApi(input$opponent_select))  #Controller:: getTactic getTeamApi
   tagList(title = h3("Away Tactic"),
+    hr(class='my-4'),
     selectInput("PlaySpeed", label = h5("PlaySpeed"), 
                 choices = list("Balance" = 1, "Fast" = 2, "Slow" = 3), 
                 selected = tactic$PlaySpeed),
@@ -71,6 +72,7 @@ output$select_input_Away <- renderUI({
 output$select_input_Away2 <- renderUI({
   tactic <- getTactic(getTeamApi(input$opponent_select))   #Controller:: getTactic getTeamApi
   tagList(
+    hr(class='my-2'),
     selectInput("ChanceCreationCross", label = h5("ChanceCreationCross"), 
                 choices = list("Little" = 1, "Lots" = 2, "Normal" = 3), 
                 selected = tactic$Crossing),

@@ -19,49 +19,57 @@ TEAM_CHOICES <-c("Arsenal" = "Arsenal",
                  "West Ham United" = "West Ham United")
 
 fluidRow(
-  column(4, wellPanel(
-    id = "leftPanel",
-    div(
-        id = "opponentTeamPanel",
-        selectInput("opponent_select", label = h3("Select Team"), TEAM_CHOICES)
-    ),
-    div(
-      id = "appDesc",
-      h2("WIN") #result: predictMatch
-    )
-  )),
+  #left-side
+  column(3, 
+    wellPanel(
+      id = "leftPanel",
+      div(
+          id = "opponentTeamPanel",
+          selectInput("opponent_select",
+                      label = h3("Select Team"),
+                      TEAM_CHOICES)),
+      div(
+        id = "appDesc",
+        h2("WIN"))) #result: predictMatch
+  ),
   
-  column(8, wellPanel(
+  #right-side
+  column(9, wellPanel(
     tabsetPanel(
       id = "mainTabs", type = "tabs",
-      
       tabPanel(
-        title = "Select Home Tactic & Players", id ="descTab", value = "descTab",
+        title = "Select Home Tactic & Players",
+        id ="descTab", value = "descTab",
         fluidRow(
           column(width = 4,
-                 box(width = NULL,title = "Home Tactic",
-                     selectInput("PlaySpeed", label = h5("PlaySpeed"), 
-                                 choices = list("Balance" = 1, "Fast" = 2, "Slow" = 3), 
-                                 selected = tactic$PlaySpeed),
-                     
-                     selectInput("PlayDribbling", label = h5("PlayDribbling"), 
-                                 choices = list("Little" = 1, "Normal" = 2),
-                                 selected = tactic$PlayDribbling),
-                     
-                     selectInput("playPassing", label = h5("playPassing"), 
-                                 choices = list("Long" = 1, "Mixed" = 2, "Short" = 3), 
-                                 selected = tactic$PlayPassing),
-                     
-                     selectInput("PlayPositioning", label = h5("PlayPositioning"), 
-                                 choices = list("Free Form" = 1, "Organised" = 2),
-                                 selected = tactic$PlayPositioning),
-                     
-                     selectInput("ChanceCreationPassing", label = h5("ChanceCreationPassing"), 
-                                 choices = list("Normal" = 1, "Risky" = 2, "Safe" = 3), 
-                                 selected = tactic$Passing)
+                 box(width = NULL,
+                     title = "Home Tactic",
+                     hr(class='my-4'),
+                     div(class='form-group',
+                       selectInput("PlaySpeed", label = h5("PlaySpeed"), 
+                                   choices = list("Balance" = 1, "Fast" = 2, "Slow" = 3), 
+                                   selected = tactic$PlaySpeed),
+                       
+                       selectInput("PlayDribbling", label = h5("PlayDribbling"), 
+                                   choices = list("Little" = 1, "Normal" = 2),
+                                   selected = tactic$PlayDribbling),
+                       
+                       selectInput("playPassing", label = h5("playPassing"), 
+                                   choices = list("Long" = 1, "Mixed" = 2, "Short" = 3), 
+                                   selected = tactic$PlayPassing),
+                       
+                       selectInput("PlayPositioning", label = h5("PlayPositioning"), 
+                                   choices = list("Free Form" = 1, "Organised" = 2),
+                                   selected = tactic$PlayPositioning),
+                       
+                       selectInput("ChanceCreationPassing", label = h5("ChanceCreationPassing"), 
+                                   choices = list("Normal" = 1, "Risky" = 2, "Safe" = 3), 
+                                   selected = tactic$Passing)
+                     )
                  )),
           column(width = 4,
                  box(width = NULL,title = " ",
+                     hr(class='my-2'),
                      selectInput("ChanceCreationCross", label = h5("ChanceCreationCross"), 
                                  choices = list("Little" = 1, "Lots" = 2, "Normal" = 3), 
                                  selected = tactic$Crossing),
@@ -87,6 +95,7 @@ fluidRow(
                  )),
           column(width = 4,
                  box(width = NULL, title = "Select 11 players",
+                     hr(class='my-4'),
                      uiOutput(outputId = "Homeplayer")
                  ))
         )
@@ -104,6 +113,7 @@ fluidRow(
           ),
           column(width = 4,
                  box(width = NULL, title = "Select 11 players",
+                     hr(class='my-4'),
                      uiOutput(outputId = "Awayplayer")
                  )
           )
@@ -114,16 +124,16 @@ fluidRow(
         title = "Summary", id = "submitTab", value = "submitTab",
         fluidRow(
           column(width = 4,
-                 box(width = NULL,title = "Home Tactic"),
+                 box(width = NULL,title = "Home Tactic", hr(class='my-4')),
                  uiOutput(outputId = "selected_Hplayers")
           ),
           
           column(width = 4,
-                 box(width = NULL, title = "test"),
+                 box(width = NULL, title = "test", hr(class='my-4')),
                  chartJSRadarOutput("radar",width = "450",height = "300")
           ),
           column(width = 4,
-                 box(width = NULL, title = "Away Tactic"),
+                 box(width = NULL, title = "Away Tactic", hr(class='my-4')),
                  uiOutput(outputId = "selected_Aplayers")
           )
         )
