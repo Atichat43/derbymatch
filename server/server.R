@@ -250,12 +250,14 @@ output$radar<- renderChartJSRadar({
     if(is.null(p2)){
       h2('Loading...')
     }
-    scores <- list(
-      "Home's player" = c(c(p1$dribbling), c(p1$long_shots), c(p1$acceleration), c(p1$strength), c(p1$stamina), c(p1$crossing)),
-      "Away's player" = c(c(p2$dribbling), c(p2$long_shots), c(p2$acceleration), c(p2$strength), c(p2$stamina), c(p2$crossing))
-    )
-    labs <- c("Dribbing", "Long shot", "Acceleration", "Strength", "Stamina", "Crossing")
-    chartJSRadar(scores = scores, labs = labs, maxScale = 100)
+    else{
+      scores <- list(
+        "Home's player" = c(c(p1$dribbling), c(p1$long_shots), c(p1$acceleration), c(p1$strength), c(p1$stamina), c(p1$crossing)),
+        "Away's player" = c(c(p2$dribbling), c(p2$long_shots), c(p2$acceleration), c(p2$strength), c(p2$stamina), c(p2$crossing))
+      )
+      labs <- c("Dribbing", "Long shot", "Acceleration", "Strength", "Stamina", "Crossing")
+      chartJSRadar(scores = scores, labs = labs, maxScale = 100)
+    }
   }
 })
 
