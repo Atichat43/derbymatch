@@ -28,8 +28,8 @@ getTactic <- function(team_api){
 getPlayers <- function(team_name, lst_api = c("")){
   table_players <- getPlayersTable(team_name)
   #table_players <- subset(table_players, select = c(player_name, player_position, player_number))
-  if(lst_api != ""){
-    lst_api <- as.data.frame(lst_api)
+  lst_api <- as.data.frame(lst_api)
+  if(lst_api[1, ] != ""){
     temp <- table_players[1,]
     for(nr in 1:nrow(lst_api)){
       for(i in 1:nrow(table_players)){
