@@ -27,10 +27,16 @@ fluidRow(
           id = "opponentTeamPanel",
           selectInput("opponent_select",
                       label = h3("Select Team"),
-                      TEAM_CHOICES)),
+                      TEAM_CHOICES))
+    ),
+    wellPanel(
+      id = "leftPanel2",
       div(
         id = "appDesc",
-        h2("WIN"))) #result: predictMatch
+        h3('Predict Result:'),
+        h1("WIN", style='text-align: center;'),
+        actionButton("button", "PREDICT AGAIN", width='100%', 
+                      class='btn btn-primary')))
   ),
   
   #right-side
