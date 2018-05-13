@@ -1,18 +1,16 @@
 #Predictor
-LEVELS <- c('draw', 'win','lose')
+LEVELS <- c('DRAW', 'WIN','LOSE')
 model <- Model()
 
-predictNextMatch <- function(test_case){
-  result <- predict(model, test_case)
+predictMatch <- function(test_case){
+  result <- stats::predict(model, test_case)
   return(LEVELS[as.numeric(result)])
 }
 
 #========== for dev ========================
-randomTestCase <- function(){
-  test_case <- getDataset()
-  test_case <- test_case[sample((nrow(test_case)*0.7):nrow(test_case), 1), ]
-  print('Result For this test case:')
-  print(test_case$result)
+randomTestCase <- function(dataset=getDataset()){
+  test_case <- dataset[sample((nrow(dataset)*0.7):nrow(dataset), 1), ]
+  cat('Result For this test case:', test_case$result, '\n')
   test_case <- subset(test_case, select = -c(result))
   return(test_case)
 }
