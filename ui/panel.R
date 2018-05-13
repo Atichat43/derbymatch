@@ -35,8 +35,8 @@ fluidRow(
         id = "appDesc",
         h3('Predict Result:'),
         h1("WIN", style='text-align: center;'),
-        actionButton("button", "PREDICT AGAIN", width='100%', 
-                      class='btn btn-primary')))
+        actionButton("bt_predict", "PREDICT AGAIN", width='100%', 
+                      class='btn btn-primary btn-lg btn-block')))
   ),
   
   #right-side

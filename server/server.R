@@ -46,6 +46,12 @@ observeEvent(input$opponent_select, {
   away_team_api_list_check <<- away_team_apis[1:11]
 })
 
+observeEvent(input$bt_predict, {
+  test_case <- tempTestCase()
+  print(test_case)
+  print(predictMatch(test_case))
+})
+
 #generate tactic for away team  
 output$select_input_Away <- renderUI({
   tactic <- getTactic(getTeamApi(input$opponent_select))  #Controller:: getTactic getTeamApi
