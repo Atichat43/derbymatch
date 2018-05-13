@@ -1,8 +1,8 @@
-trainModel <- function() {
-  svm_model_e1071 <- e1071::svm(formula = result ~.,
-                                data = getDataset(),
+trainModel <- function(dataset=getDataset()) {
+  svm_model <- e1071::svm(formula = result ~.,
+                                data = dataset,
                                 type = 'C-classification')
-  return(svm_model_e1071)
+  return(svm_model)
 }
 
 Model <- function() {
