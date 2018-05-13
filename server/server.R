@@ -46,10 +46,24 @@ observeEvent(input$opponent_select, {
   away_team_api_list_check <<- away_team_apis[1:11]
 })
 
+observeEvent(input$PlayDribbling, {
+  print('change')
+  test_case$H_buildUpPlayDribblingClass <<- input$PlayDribbling
+})
+
+test_case <- tempTestCase()
+
 observeEvent(input$bt_predict, {
-  test_case <- tempTestCase()
   print(test_case)
-  print(predictMatch(test_case))
+  # a <- as.numeric(input$PlayDribbing)
+  # print(input$PlaySpeed)
+  # print(input$PlayDribbing)
+  # print(input$PlayPassing)
+  # print(a)
+  # t <- data.frame('H_overall_rating' = a,
+  #                 'A_overall_rating' = a)
+  predictMatch(c(input$PlaySpeed, input$PlayDribbling, input$PlayPassing, 2))
+  #print(predictMatch(test_case))
 })
 
 #generate tactic for away team  

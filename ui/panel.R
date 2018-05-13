@@ -60,7 +60,7 @@ fluidRow(
                                    choices = list("Little" = 1, "Normal" = 2),
                                    selected = tactic$PlayDribbling),
                        
-                       selectInput("playPassing", label = h5("playPassing"), 
+                       selectInput("PlayPassing", label = h5("playPassing"), 
                                    choices = list("Long" = 1, "Mixed" = 2, "Short" = 3), 
                                    selected = tactic$PlayPassing),
                        
