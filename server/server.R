@@ -142,31 +142,30 @@ output$DefenceTeamWidthA<- renderText({
 
 
 #global var
-home_team_player_list <- toStringPlayersChoices(getPlayers("Manchester United")) #toStringPlayersChoices, getPlayers
-home_team_api_list <- toStringApiPlayers(getPlayers("Manchester United"))
-home_team_api_list_check <- home_team_api_list[1:11]
+home_team_players <- toStringPlayersChoices(getPlayers("Manchester United")) #toStringPlayersChoices, getPlayers
+home_team_apis <- toStringApiPlayers(getPlayers("Manchester United"))
+home_team_api_list_check <- home_team_apis[1:11]
+
+away_team_api_list_check <- NULL
 ##########################################################################################################
 ##########################################################################################################
 #ui home player
 output$Homeplayer<- renderUI({ 
    #getPlayers, toStringApiPlayers
   checkboxGroupInput("HomePlayerGroup", label = h5("Manchester United's Player"), 
-                     choiceNames = home_team_player_list,
-                     choiceValues = home_team_api_list,
+                     choiceNames = home_team_players,
+                     choiceValues = home_team_apis,
                      selected = home_team_api_list_check
   )
 })
 
 observeEvent(input$HomePlayerGroup, {
-  print(home_team_api_list_check)
-  print(input$HomePlayerGroup)
   if(length(input$HomePlayerGroup) > 11){
-    lst_check <- home_team_api_list_check
     updateCheckboxGroupInput(session=session,
                              inputId = "HomePlayerGroup", 
-                             choiceNames = home_team_player_list,
-                             choiceValues = home_team_api_list,
-                             selected = lst_check)
+                             choiceNames = home_team_players,
+                             choiceValues = home_team_apis,
+                             selected = home_team_api_list_check)
   }
   else{
     home_team_api_list_check <<- input$HomePlayerGroup
@@ -175,15 +174,39 @@ observeEvent(input$HomePlayerGroup, {
 
 #ui away player
 output$Awayplayer <- renderUI({
-  playerList <- toStringPlayersChoices(getPlayers(input$opponent_select)) #toStringPlayersChoices, getPlayers
-  apiList <- toStringApiPlayers(getPlayers(input$opponent_select))  #getPlayers, toStringApiPlayers
+  away_team_players <- toStringPlayersChoices(getPlayers(input$opponent_select)) #toStringPlayersChoices, getPlayers
+  away_team_apis <- toStringApiPlayers(getPlayers(input$opponent_select))  #getPlayers, toStringApiPlayers
   tempText <- paste(input$opponent_select,"'s Player")
   checkboxGroupInput("AwayPlayerGroup", label = h5(tempText), 
-                     choiceNames = playerList,
-                     choiceValues = apiList,
-                     selected = apiList[1:11]
+                     choiceNames = away_team_players,
+                     choiceValues = away_team_apis,
+                     selected = away_team_api_list_check
   )
 })
+
+observeEvent(input$AwayPlayerGroup, {
+  print(input$AwayPlayerGroup)
+  if(length(input$AwayPlayerGroup) > 11){
+    print("in")
+    away_team_players <- toStringPlayersChoices(getPlayers(input$opponent_select)) #toStringPlayersChoices, getPlayers
+    away_team_apis <- toStringApiPlayers(getPlayers(input$opponent_select))  #getPlayers, toStringApiPlayers
+    updateCheckboxGroupInput(session=session,
+                             inputId = "AwayPlayerGroup", 
+                             choiceNames = away_team_players,
+                             choiceValues = away_team_apis,
+                             selected = away_team_api_list_check)
+  }
+  else if(length(input$AwayPlayerGroup) > 0){
+    print("update")
+    away_team_api_list_check <<- input$AwayPlayerGroup
+  }
+  else if(length(input$AwayPlayerGroup) == 0){
+    away_team_apis <- toStringApiPlayers(getPlayers(input$opponent_select))
+    away_team_api_list_check <<- away_team_apis[1:11]
+  }
+  else{}
+}, ignoreNULL = FALSE)
+
 
 ##########################################################################################################
 ##########################################################################################################
