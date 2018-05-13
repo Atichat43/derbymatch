@@ -27,21 +27,20 @@ getTactic <- function(team_api){
 
 getPlayers <- function(team_name, lst_api = c("")){
   table_players <- getPlayersTable(team_name)
-  #table_players <- subset(table_players, select = c(player_name, player_position, player_number))
   lst_api <- as.data.frame(lst_api)
   if(lst_api[1, ] != ""){
-    temp <- table_players[1,]
+    df_players <- table_players[1,]
     for(nr in 1:nrow(lst_api)){
       for(i in 1:nrow(table_players)){
         if(lst_api[nr, 1] == table_players$player_api_id[i]){
-          temp[nr, ] <- table_players[i, ]
+          df_players[nr, ] <- table_players[i, ]
           break
         }
       }
     }
-    return(temp)
+    return(df_players) #return dataframe of players have api_id in lst_api  
   }
-  return(table_players)
+  return(table_players) #if lst_api is empty return all of players team
 }
 
 getPlayerStat <- function(team_name, player_api){

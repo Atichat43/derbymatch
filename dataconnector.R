@@ -29,13 +29,3 @@ getLastTactic <- function(team_api, dataset=DATASET){
   }
   return(last_tactic)
 }
-
-getCompare <- function(p1, p2){
-  df <- cbind(t(p1),t(p2))
-  df <- cbind(c(rownames(df)), df)
-  colnames(df) <- c("label", "HomeTeam", "AwayTeam")
-  rownames(df) <- 1:nrow(df)
-  lables <- df[,1]
-  df <- cbind(lables, apply(df[,2:3], 2, as.numeric))
-  return(df)
-}
