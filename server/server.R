@@ -41,11 +41,10 @@ output$DefenceTeamWidth<- renderText({
   paste("DefenceTeamWidth",input$DefenceTeamWidth)
 })
 
-####
-observeEvent(input$opponent_select,{
-  print('update')
-  }
-)
+observeEvent(input$opponent_select, {
+  away_team_apis <- toStringApiPlayers(getPlayers(input$opponent_select))
+  away_team_api_list_check <<- away_team_apis[1:11]
+})
 
 #generate tactic for away team  
 output$select_input_Away <- renderUI({
@@ -224,10 +223,20 @@ output$selected_Hplayers <- renderUI({
 })
 
 output$selected_Aplayers <- renderUI({
-  playerlist <- toStringPlayersChoices(getPlayers(input$opponent_select, input$AwayPlayerGroup)) #toStringPlayersChoices, getPlayers
-  radioButtons("rbA_players", "Choose one:",
-               choiceNames = playerlist,
-               choiceValues = input$AwayPlayerGroup)
+  if(is.null(input$AwayPlayerGroup)){
+    away_team_apis <- toStringApiPlayers(getPlayers(input$opponent_select))
+    away_team_apis <- away_team_apis[1:11]
+    playerlist <- toStringPlayersChoices(getPlayers(input$opponent_select, away_team_apis)) #toStringPlayersChoices, getPlayers
+    radioButtons("rbA_players", "Choose one:",
+                 choiceNames = playerlist,
+                 choiceValues = away_team_apis)
+  }
+  else{
+    playerlist <- toStringPlayersChoices(getPlayers(input$opponent_select, input$AwayPlayerGroup)) #toStringPlayersChoices, getPlayers
+    radioButtons("rbA_players", "Choose one:",
+                 choiceNames = playerlist,
+                 choiceValues = input$AwayPlayerGroup)
+  }
 })
 
 #Radar Chart
