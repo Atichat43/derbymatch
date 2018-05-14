@@ -6,12 +6,19 @@ observeEvent(input$opponent_select, {
   away_team_api_list_check <<- away_team_apis[1:11]
 })
 
+apis <- toStringApiPlayers(getPlayers(HOME_TEAM_NAME))[1:11]
+h_overall_potential <- getOverallRatingPotential(HOME_TEAM_NAME, apis)
+
 observeEvent(input$bt_predict, {
   test_case <- tempTestCase()
-  test_case$H_overall_rating = 1
-  test_case$A_overall_rating = 1
-  test_case$H_potential= 1
-  test_case$A_potential= 1
+  if(!is.null(home_team_api_list_check)){
+    h_overall_potential <<- getOverallRatingPotential(HOME_TEAM_NAME, as.array(home_team_api_list_check))
+  }
+  test_case$H_overall_rating = h_overall_potential[1]
+  test_case$H_potential= h_overall_potential[2]
+  a_overall_potential <- getOverallRatingPotential(input$opponent_select, away_team_api_list_check)
+  test_case$A_overall_rating = a_overall_potential[1]
+  test_case$A_potential= a_overall_potential[2]
   test_case$H_buildUpPlaySpeedClass= as.numeric(input$H_buildUpPlaySpeedClass)
   test_case$H_buildUpPlayDribblingClass = as.numeric(input$H_buildUpPlayDribblingClass)
   test_case$H_buildUpPlayPassingClass= as.numeric(input$H_buildUpPlayPassingClass)

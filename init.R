@@ -5,6 +5,7 @@ library(radarchart) #Ui: radar chart
 #library(caret) # createFolds, createDataPartition
 
 MANUNITED_API <- 10260
+HOME_TEAM_NAME <- 'Manchester United'
 
 source('dataconnector.R')
 source('controller.R')
