@@ -34,7 +34,7 @@ fluidRow(
       div(
         id = "appDesc",
         h3('Predict Result:'),
-        h1("WIN", style='text-align: center;'),
+        uiOutput(outputId = "predict_result"),
         actionButton("bt_predict", "PREDICT AGAIN", width='100%', 
                       class='btn btn-primary btn-lg btn-block')))
   ),

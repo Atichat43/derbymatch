@@ -58,8 +58,31 @@ observeEvent(input$bt_predict, {
     test_case$A_defenceTeamWidthClass = as.numeric(input$A_defenceTeamWidthClass)
     test_case$A_chanceCreationPositioningClass = as.numeric(input$A_chanceCreationPositioningClass)
   }
-  predictMatch(test_case)
+  result <- predictMatch(test_case)
+  output$predict_result <- renderUI({
+                              if(as.character(result) == 'WIN'){
+                                h1('WIN', style='text-align:center;
+                                                  background-color: green;
+                                                  color:#fff')
+                              }
+                              else if(as.character(result) == 'DRAW'){
+                                h1('DRAW', style='text-align:center;
+                                                  background-color: gray;')
+                              }
+                              else if(as.character(result) == 'LOSE'){
+                                h1('LOSE', style='text-align:center;
+                                                  background-color: red;')
+                              }
+                              else{
+                                h1('')
+                              }
+                            })
 })
+
+output$predict_result <- renderUI({
+  h3('Cicked Button', style='text-align:center;')
+})
+
 
 #generate tactic for away team  
 output$select_input_Away <- renderUI({
