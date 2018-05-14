@@ -55,6 +55,23 @@ getPlayerStat <- function(team_name, player_api){
     }
   }
 }
+
+getOverallRatingPotential <- function(team_name, player_apis){
+  if(is.null(player_apis)){
+    return(NULL)
+  }
+  table_players <- getPlayersTable(team_name)
+  table_players <- subset(table_players, select = c("player_api_id", "overall_rating", "potential"))
+  total_overall <- 0
+  total_potential <- 0
+  for(nr in 1:nrow(player_apis)){
+    if(player_apis[nr] == table_players$player_api_id[nr]){
+      total_overall = total_overall + table_players$overall_rating[nr]
+      total_potential = total_potential + table_players$potential[nr]
+    }
+  }
+  return(c(total_overall, total_potential))
+}
 ###############################################################################################################
 toStringApiPlayers <- function(df_players){
   n_players <- nrow(df_players)
