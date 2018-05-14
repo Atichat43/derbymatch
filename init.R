@@ -2,7 +2,6 @@ library(e1071) #Model: svm
 library(shiny) #Ui: main
 library(shinydashboard)
 library(radarchart) #Ui: radar chart
-#library(caret) # createFolds, createDataPartition
 
 MANUNITED_API <- 10260
 HOME_TEAM_NAME <- 'Manchester United'

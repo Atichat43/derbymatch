@@ -16,7 +16,7 @@ observeEvent(input$bt_predict, {
   }
   test_case$H_overall_rating = h_overall_potential[1]
   test_case$H_potential= h_overall_potential[2]
-  a_overall_potential <- getOverallRatingPotential(input$opponent_select, away_team_api_list_check)
+  a_overall_potential <- getOverallRatingPotential(input$opponent_select, as.array(away_team_api_list_check))
   test_case$A_overall_rating = a_overall_potential[1]
   test_case$A_potential= a_overall_potential[2]
   test_case$H_buildUpPlaySpeedClass= as.numeric(input$H_buildUpPlaySpeedClass)
