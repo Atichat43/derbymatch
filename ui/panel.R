@@ -128,7 +128,7 @@ fluidRow(
       ),        
 
       tabPanel(
-        title = "Summary", id = "submitTab", value = "submitTab",
+        title = "Comparing", id = "submitTab", value = "submitTab",
         fluidRow(
           column(width = 4,
                  box(width = NULL,title = "Home Tactic", hr(class='my-4')),
