@@ -1,69 +1,41 @@
 ##############################################################################################
 #render tactic OUR TEAM
 #global number of players 
-output$PlaySpeed<- renderText({
-  paste("PlaySpeed",input$PlaySpeed)
-})
-
-output$PlayDribbing <- renderText({
-  paste("PlayDribbing",input$PlayDribbing)
-})
-
-output$PlayPassing <- renderText({
-  paste("PlayPassing",input$PlayPassing)
-})
-
-output$PlayPositioning <- renderText({
-  paste("PlayPositioning",input$PlayPositioning)
-})
-
-output$ChanceCreationPassing<- renderText({
-  paste("ChanceCreationPassing",input$ChanceCreationPassing)
-})
-
-output$ChanceCreationCross<- renderText({
-  paste("ChanceCreationCross",input$ChanceCreationCross)
-})
-
-output$ChanceCreationShooting<- renderText({
-  paste("ChanceCreationShooting",input$ChanceCreationShooting)
-})
-
-output$DefencePressure<- renderText({
-  paste("DefencePressure",input$DefencePressure)
-})
-
-output$DefenceAggretion<- renderText({
-  paste("DefenceAggretion",input$DefenceAggretion)
-})
-
-output$DefenceTeamWidth<- renderText({
-  paste("DefenceTeamWidth",input$DefenceTeamWidth)
-})
-
 observeEvent(input$opponent_select, {
   away_team_apis <- toStringApiPlayers(getPlayers(input$opponent_select))
   away_team_api_list_check <<- away_team_apis[1:11]
 })
 
-observeEvent(input$PlayDribbling, {
-  print('change')
-  test_case$H_buildUpPlayDribblingClass <<- input$PlayDribbling
-})
-
-test_case <- tempTestCase()
-
 observeEvent(input$bt_predict, {
-  print(test_case)
-  # a <- as.numeric(input$PlayDribbing)
-  # print(input$PlaySpeed)
-  # print(input$PlayDribbing)
-  # print(input$PlayPassing)
-  # print(a)
-  # t <- data.frame('H_overall_rating' = a,
-  #                 'A_overall_rating' = a)
-  predictMatch(c(input$PlaySpeed, input$PlayDribbling, input$PlayPassing, 2))
-  #print(predictMatch(test_case))
+  test_case <- tempTestCase()
+  test_case$H_overall_rating = 1
+  test_case$A_overall_rating = 1
+  test_case$H_potential= 1
+  test_case$A_potential= 1
+  test_case$H_buildUpPlaySpeedClass= as.numeric(input$H_buildUpPlaySpeedClass)
+  test_case$H_buildUpPlayDribblingClass = as.numeric(input$H_buildUpPlayDribblingClass)
+  test_case$H_buildUpPlayPassingClass= as.numeric(input$H_buildUpPlayPassingClass)
+  test_case$H_buildUpPlayPositioningClass= as.numeric(input$H_buildUpPlayPositioningClass)
+  test_case$H_chanceCreationPassingClass = as.numeric(input$H_chanceCreationPassingClass)
+  test_case$H_chanceCreationCrossingClass = as.numeric(input$H_chanceCreationCrossingClass)
+  test_case$H_chanceCreationShootingClass = as.numeric(input$H_chanceCreationShootingClass)
+  test_case$H_defencePressureClass = as.numeric(input$H_defencePressureClass)
+  test_case$H_defenceAggressionClass = as.numeric(input$H_defenceAggressionClass)
+  test_case$H_defenceTeamWidthClass = as.numeric(input$H_defenceTeamWidthClass)
+  test_case$H_chanceCreationPositioningClass = as.numeric(input$H_chanceCreationPositioningClass)
+  # #######################################################################################
+  test_case$A_buildUpPlaySpeedClass= as.numeric(input$A_buildUpPlaySpeedClass)
+  test_case$A_buildUpPlayDribblingClass = as.numeric(input$A_buildUpPlayDribblingClass)
+  test_case$A_buildUpPlayPassingClass= as.numeric(input$A_buildUpPlayPassingClass)
+  test_case$A_buildUpPlayPositioningClass= as.numeric(input$A_buildUpPlayPositioningClass)
+  test_case$A_chanceCreationPassingClass = as.numeric(input$A_chanceCreationPassingClass)
+  test_case$A_chanceCreationCrossingClass = as.numeric(input$A_chanceCreationCrossingClass)
+  test_case$A_chanceCreationShootingClass = as.numeric(input$A_chanceCreationShootingClass)
+  test_case$A_defencePressureClass = as.numeric(input$A_defencePressureClass)
+  test_case$A_defenceAggressionClass = as.numeric(input$A_defenceAggressionClass)
+  test_case$A_defenceTeamWidthClass = as.numeric(input$A_defenceTeamWidthClass)
+  test_case$A_chanceCreationPositioningClass = as.numeric(input$A_chanceCreationPositioningClass)
+  predictMatch(test_case)
 })
 
 #generate tactic for away team  
@@ -71,23 +43,23 @@ output$select_input_Away <- renderUI({
   tactic <- getTactic(getTeamApi(input$opponent_select))  #Controller:: getTactic getTeamApi
   tagList(title = h3("Away Tactic"),
     hr(class='my-4'),
-    selectInput("PlaySpeed", label = h5("PlaySpeed"), 
+    selectInput("A_buildUpPlaySpeedClass", label = h5("PlaySpeed"), 
                 choices = list("Balance" = 1, "Fast" = 2, "Slow" = 3), 
                 selected = tactic$PlaySpeed),
     
-    selectInput("PlayDribbling", label = h5("PlayDribbling"), 
+    selectInput("A_buildUpPlayDribblingClass", label = h5("PlayDribbling"), 
                 choices = list("Little" = 1, "Normal" = 2),
                 selected = tactic$PlayDribbling),
     
-    selectInput("playPassing", label = h5("playPassing"), 
+    selectInput("A_buildUpPlayPassingClass", label = h5("playPassing"), 
                 choices = list("Long" = 1, "Mixed" = 2, "Short" = 3), 
                 selected = tactic$PlayPassing),
     
-    selectInput("PlayPositioning", label = h5("PlayPositioning"), 
+    selectInput("A_buildUpPlayPositioningClass", label = h5("PlayPositioning"), 
                 choices = list("Free Form" = 1, "Organised" = 2),
                 selected = tactic$PlayPositioning),
     
-    selectInput("ChanceCreationPassing", label = h5("ChanceCreationPassing"), 
+    selectInput("A_chanceCreationPassingClass", label = h5("ChanceCreationPassing"), 
                 choices = list("Normal" = 1, "Risky" = 2, "Safe" = 3), 
                 selected = tactic$Passing)
   )
@@ -97,27 +69,27 @@ output$select_input_Away2 <- renderUI({
   tactic <- getTactic(getTeamApi(input$opponent_select))   #Controller:: getTactic getTeamApi
   tagList(
     hr(class='my-2'),
-    selectInput("ChanceCreationCross", label = h5("ChanceCreationCross"), 
+    selectInput("A_chanceCreationCrossingClass", label = h5("ChanceCreationCross"), 
                 choices = list("Little" = 1, "Lots" = 2, "Normal" = 3), 
                 selected = tactic$Crossing),
     
-    selectInput("ChanceCreationShooting", label = h5("ChanceCreationShooting"), 
+    selectInput("A_chanceCreationShootingClass", label = h5("ChanceCreationShooting"), 
                 choices = list("Little" = 1, "Lots" = 2, "Normal" = 3), 
                 selected = tactic$Shooting),
     
-    selectInput("ChanceCreationPosition", label = h5("ChanceCreationPosition"), 
+    selectInput("A_chanceCreationPositioningClass", label = h5("ChanceCreationPosition"), 
                 choices = list("Free Form" = 1, "Organised" = 2), 
                 selected = tactic$Positioning),
     
-    selectInput("DefencePressure", label = h5("DefencePressure"), 
+    selectInput("A_defencePressureClass", label = h5("DefencePressure"), 
                 choices = list("Deep" = 1, "High" = 2, "Medium" = 3), 
                 selected = tactic$Pressure),
     
-    selectInput("DefenceAggression", label = h5("DefenceAggression"), 
+    selectInput("A_defenceAggressionClass", label = h5("DefenceAggression"), 
                 choices = list("Contain" = 1, "Double" = 2, "Press" = 3), 
                 selected = tactic$Aggression),
     
-    selectInput("DefenceTeamWidth", label = h5("DefenceTeamWidth"), 
+    selectInput("A_defenceTeamWidthClass", label = h5("DefenceTeamWidth"), 
                 choices = list("Narrow" = 1, "Normal" = 2, "Wide" = 3), 
                 selected = tactic$TeamWidth)
   )
@@ -125,48 +97,6 @@ output$select_input_Away2 <- renderUI({
 
 #####################################################################################################
 #render tactic Away Team
-output$PlaySpeedA<- renderText({
-  paste("PlaySpeed",input$PlaySpeedA)
-})
-
-output$PlayDribbingA <- renderText({
-  paste("PlayDribbing",input$PlayDribbingA)
-})
-
-output$PlayPassingA <- renderText({
-  paste("PlayPassing",input$PlayPassingA)
-})
-
-output$PlayPositioningA <- renderText({
-  paste("PlayPositioning",input$PlayPositioningA)
-})
-
-output$ChanceCreationPassingA<- renderText({
-  paste("ChanceCreationPassing",input$ChanceCreationPassingA)
-})
-
-output$ChanceCreationCrossA<- renderText({
-  paste("ChanceCreationCross",input$ChanceCreationCrossA)
-})
-
-output$ChanceCreationShootingA<- renderText({
-  paste("ChanceCreationShooting",input$ChanceCreationShootingA)
-})
-
-output$DefencePressureA<- renderText({
-  paste("DefencePressure",input$DefencePressureA)
-})
-
-output$DefenceAggretionA<- renderText({
-  paste("DefenceAggretion",input$DefenceAggretionA)
-})
-
-output$DefenceTeamWidthA<- renderText({
-  paste("DefenceTeamWidth",input$DefenceTeamWidthA)
-  
-})
-
-
 #global var
 home_team_players <- toStringPlayersChoices(getPlayers("Manchester United")) #toStringPlayersChoices, getPlayers
 home_team_apis <- toStringApiPlayers(getPlayers("Manchester United"))

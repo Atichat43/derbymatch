@@ -52,23 +52,23 @@ fluidRow(
                      title = "Home Tactic",
                      hr(class='my-4'),
                      div(class='form-group',
-                       selectInput("PlaySpeed", label = h5("PlaySpeed"), 
+                       selectInput("H_buildUpPlaySpeedClass", label = h5("PlaySpeed"), 
                                    choices = list("Balance" = 1, "Fast" = 2, "Slow" = 3), 
                                    selected = tactic$PlaySpeed),
                        
-                       selectInput("PlayDribbling", label = h5("PlayDribbling"), 
+                       selectInput("H_buildUpPlayDribblingClass", label = h5("PlayDribbling"), 
                                    choices = list("Little" = 1, "Normal" = 2),
                                    selected = tactic$PlayDribbling),
                        
-                       selectInput("PlayPassing", label = h5("playPassing"), 
+                       selectInput("H_buildUpPlayPassingClass", label = h5("playPassing"), 
                                    choices = list("Long" = 1, "Mixed" = 2, "Short" = 3), 
                                    selected = tactic$PlayPassing),
                        
-                       selectInput("PlayPositioning", label = h5("PlayPositioning"), 
+                       selectInput("H_buildUpPlayPositioningClass", label = h5("PlayPositioning"), 
                                    choices = list("Free Form" = 1, "Organised" = 2),
                                    selected = tactic$PlayPositioning),
                        
-                       selectInput("ChanceCreationPassing", label = h5("ChanceCreationPassing"), 
+                       selectInput("H_chanceCreationPassingClass", label = h5("ChanceCreationPassing"), 
                                    choices = list("Normal" = 1, "Risky" = 2, "Safe" = 3), 
                                    selected = tactic$Passing)
                      )
@@ -76,26 +76,26 @@ fluidRow(
           column(width = 4,
                  box(width = NULL,title = " ",
                      hr(class='my-2'),
-                     selectInput("ChanceCreationCross", label = h5("ChanceCreationCross"), 
+                     selectInput("H_chanceCreationCrossingClass", label = h5("ChanceCreationCross"), 
                                  choices = list("Little" = 1, "Lots" = 2, "Normal" = 3), 
                                  selected = tactic$Crossing),
-                     selectInput("ChanceCreationShooting", label = h5("ChanceCreationShooting"), 
+                     selectInput("H_chanceCreationShootingClass", label = h5("ChanceCreationShooting"), 
                                  choices = list("Little" = 1, "Lots" = 2, "Normal" = 3), 
                                  selected = tactic$Shooting),
                      
-                     selectInput("ChanceCreationPosition", label = h5("ChanceCreationPosition"), 
+                     selectInput("H_chanceCreationPositioningClass", label = h5("ChanceCreationPosition"), 
                                  choices = list("Free Form" = 1, "Organised" = 2), 
                                  selected = tactic$Positioning),
                      
-                     selectInput("DefencePressure", label = h5("DefencePressure"), 
+                     selectInput("H_defencePressureClass", label = h5("DefencePressure"), 
                                  choices = list("Deep" = 1, "High" = 2, "Medium" = 3), 
                                  selected = tactic$Pressure),
                      
-                     selectInput("DefenceAggression", label = h5("DefenceAggression"), 
+                     selectInput("H_defenceAggressionClass", label = h5("DefenceAggression"), 
                                  choices = list("Contain" = 1, "Double" = 2, "Press" = 3), 
                                  selected = tactic$Aggression),
                      
-                     selectInput("DefenceTeamWidth", label = h5("DefenceTeamWidth"), 
+                     selectInput("H_defenceTeamWidthClass", label = h5("DefenceTeamWidth"), 
                                  choices = list("Narrow" = 1, "Normal" = 2, "Wide" = 3), 
                                  selected = tactic$TeamWidth)
                  )),

@@ -1,12 +1,11 @@
 #Predictor
 LEVELS <- c('DRAW', 'WIN','LOSE')
-model <- Model()
+#model <- Model()
 
 predictMatch <- function(test_case){
   print(test_case)
   #result <- stats::predict(model, test_case)
-  result <- 1
-  return(LEVELS[as.numeric(result)])
+  #return(LEVELS[as.numeric(result)])
 }
 
 tempTestCase <- function(dataset=getDataset()){
