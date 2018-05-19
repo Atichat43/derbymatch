@@ -12,8 +12,10 @@ test_that("getTeamApiName: return value", {
 })
 
 test_that("getPlayersTable:", {
+  # expect_that(is.null(getPlayersTable('')), is_true())
+  # expect_that(is.null(getPlayersTable('Li')), is_true())
   expect_that(is.null(getPlayersTable('')), is_true())
-  expect_that(is.null(getPlayersTable('Li')), is_true())
+  expect_that(getPlayersTable('Li'), shows_message("Can't load players table"))
   for(di in dir(file.path('datasets', 'players'))){
     str <- unlist(strsplit(di, "_"))
     str <- unlist(strsplit(str[2], "\\."))

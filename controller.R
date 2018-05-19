@@ -14,19 +14,29 @@ createDefaultTactic <- function(){
 }
 
 getTeamApi <- function(team_name){
+  if(team_name == '' || is.null(team_name)){
+    return(NULL)
+  }
   return(getTeamApiName(team_name))
 }
 
 getTactic <- function(team_api){
-  temp_tactic <- createDefaultTactic()
   last_tactic <- getLastTactic(team_api) #DataConnector: getLastTactic(team_api)
+  if(is.null(last_tactic)){
+    return(NULL)
+  }
+  temp_tactic <- createDefaultTactic()
   temp_tactic[1:length(temp_tactic)] <- last_tactic[1:length(temp_tactic)]
   apply(temp_tactic, 2, as.numeric)
   return(temp_tactic)
 }
 
+#testing
 getPlayers <- function(team_name, lst_api = c("")){
   table_players <- getPlayersTable(team_name)
+  if(is.null(table_players)){
+    return(NULL)
+  }
   lst_api <- as.data.frame(lst_api)
   if(lst_api[1, ] != ""){
     df_players <- table_players[1,]
@@ -44,10 +54,13 @@ getPlayers <- function(team_name, lst_api = c("")){
 }
 
 getPlayerStat <- function(team_name, player_api){
-  if(is.null(player_api)){
+  if(is.null(player_api) || player_api == '' || is.null(team_name) || team_name == ''){
     return(NULL)
   }
   table_players <- getPlayersTable(team_name)
+  if(is.null(table_players)){
+    return(NULL)
+  }
   table_players <- subset(table_players, select = c("player_api_id", "dribbling", "long_shots", "acceleration", "strength", "stamina", "crossing"))
   for(nr in 1:nrow(table_players)){
     if(player_api == table_players$player_api_id[nr]){
@@ -57,10 +70,13 @@ getPlayerStat <- function(team_name, player_api){
 }
 
 getOverallRatingPotential <- function(team_name, player_apis){
-  if(is.null(player_apis)){
+  if(is.null(player_apis) || player_apis == '' || is.null(team_name) || team_name == ''){
     return(NULL)
   }
   table_players <- getPlayersTable(team_name)
+  if(is.null(table_players)){
+    return(NULL)
+  }
   table_players <- subset(table_players, select = c("player_api_id", "overall_rating", "potential"))
   total_overall <- 0
   total_potential <- 0

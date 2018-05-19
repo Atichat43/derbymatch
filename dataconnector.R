@@ -41,6 +41,7 @@ getPlayersTable <- function(team_name){
   }
   path <- paste('Player_', team_name, '.csv', sep="")
   if(!(path %in% dir(file.path('datasets', 'players')))){
+    message("Can't load players table")
     return(NULL)
   }
   path <- file.path('datasets', 'players', paste('Player_', team_name, '.csv', sep=""))
