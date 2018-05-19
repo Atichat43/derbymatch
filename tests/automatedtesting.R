@@ -1,4 +1,5 @@
 library(testthat)
-#source("init.R")
+source("init.R")
 #test_dir(file.path('tests', 'testthat'))
 #auto_test('.', 'tests/testthat')
+source(file.path('model', 'model.R'))

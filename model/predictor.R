@@ -1,11 +1,13 @@
 #Predictor
-LEVELS <- c('DRAW', 'WIN','LOSE')
+LEVELS <- c('DRAW', 'WIN','LOSE') #DRAW 1, #WIN 2, #LOSE 3 
 model <- Model()
 
 predictMatch <- function(test_case){
   result <- stats::predict(model, test_case)
   return(LEVELS[as.numeric(result)])
 }
+#test predictMatch
+
 
 tempTestCase <- function(dataset=getDataset()){
   test_case <- dataset[3, ]
@@ -17,7 +19,6 @@ tempTestCase <- function(dataset=getDataset()){
 #========== for dev ========================
 randomTestCase <- function(dataset=getDataset()){
   test_case <- dataset[sample((nrow(dataset)*0.7):nrow(dataset), 1), ]
-  cat('Result For this test case:', test_case$result, '\n')
-  test_case <- subset(test_case, select = -c(result))
+  test_case <- subset(test_case, select = -c(away_team_api_id, home_team_api_id, result))
   return(test_case)
 }
