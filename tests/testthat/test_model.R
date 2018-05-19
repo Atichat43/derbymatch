@@ -1,3 +1,4 @@
+context("Testing: ...Model")
 #test class of model is svm from trainModel function
 test_that("trainModel: class(model)", {
   model <- trainModel()

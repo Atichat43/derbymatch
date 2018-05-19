@@ -1,3 +1,4 @@
+context("Testing: ...Init")
 test_that("Distinct roots", {
   
   roots <- real.roots(1, 7, 12)
