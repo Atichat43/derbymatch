@@ -2,7 +2,7 @@
 #outcome from predictMatch
 ###getRandomTestCaseByOutcome
 #test all test case is all LOSE, WIN
-context("Testing: ...Random Test Case")
+context("Testing: ...Test Case")
 test_that("getRandomTestCaseByOutcome: result follow outcome", {
   list_test_cases <- getRandomTestCaseByOutcome("WIN")
   for(test_case in list_test_cases){
@@ -29,7 +29,7 @@ test_that("getRandomTestCaseByN: size return equals to input n", {
   }
 })
 
-context("Testing: ...Function for predictor")
+context("Testing: ...Predictor1")
 test_that("getResultFromDfTestCase: outcome match result of TestCase should be", {
   outcome <- getResultFromDfTestCase(getRandomTestCaseByOutcome("WIN"))
   expect_that(levels(factor(outcome)), equals("WIN"))
@@ -42,7 +42,7 @@ test_that("getResultFromDfTestCase: outcome match result of TestCase should be",
 })
 
 ######################################################################################
-context("Testing: ...Predictor")
+context("Testing: ...Predictor2")
 ## Test predictMatch
 ##Test tempTestCase
 #names: test attr is suitable to be testcase for prediction
