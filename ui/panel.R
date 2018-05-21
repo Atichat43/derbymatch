@@ -131,16 +131,16 @@ fluidRow(
         title = "Comparing", id = "submitTab", value = "submitTab",
         fluidRow(
           column(width = 4,
-                 box(width = NULL,title = "Home Tactic", hr(class='my-4')),
+                 box(width = NULL,title = "Home Players", hr(class='my-4')),
                  uiOutput(outputId = "selected_Hplayers")
           ),
           
           column(width = 4,
-                 box(width = NULL, title = "test", hr(class='my-4')),
+                 box(width = NULL, title = "Comparing", hr(class='my-4')),
                  chartJSRadarOutput("radar",width = "450",height = "300")
           ),
           column(width = 4,
-                 box(width = NULL, title = "Away Tactic", hr(class='my-4')),
+                 box(width = NULL, title = "Away Players", hr(class='my-4')),
                  uiOutput(outputId = "selected_Aplayers")
           )
         )
