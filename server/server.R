@@ -10,6 +10,11 @@ apis <- toStringApiPlayers(getPlayers(HOME_TEAM_NAME))[1:11]
 h_overall_potential <- getOverallRatingPotential(HOME_TEAM_NAME, apis)
 
 observeEvent(input$bt_predict, {
+  if(length(away_team_api_list_check) != 11 || length(home_team_api_list_check) != 11){
+    showNotification("Please select 11 players (Away team & Home team).", type='warning', duration=2)
+    output$predict_result <- renderUI({ h3('Cicked Button', style='text-align:center;')})
+    return()
+  }
   test_case <- tempTestCase()
   if(!is.null(home_team_api_list_check)){
     h_overall_potential <<- getOverallRatingPotential(HOME_TEAM_NAME, as.array(home_team_api_list_check))

@@ -134,3 +134,10 @@ fieldset:disabled a.btn {
   -webkit-box-shadow: 0 0 0 0.2rem rgba(47, 164, 231, 0.5);
           box-shadow: 0 0 0 0.2rem rgba(47, 164, 231, 0.5);
 }
+
+.shiny-notification {
+             position:fixed;
+             top: calc(1%);;
+             left: calc(5%);;
+             width: calc(90%);
+             }
