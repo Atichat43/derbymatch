@@ -35,12 +35,14 @@ tuning parameter: mtry(Randomly Selected Predictors)
 ```{r}
 library(randomForest)
 set.seed(415)
-randomForest_model <- randomForest(result ~.,
-                      data=training_set, 
-                      importance=TRUE, 
-                      ntree=500)
-randomForest_model
-accuracy(test_result, predict(randomForest_model, test_data))
+a <- list()
+for(i in 1:2000){
+  randomForest_model <- randomForest(result ~.,
+                                      data=training_set, 
+                                      importance=TRUE, 
+                                      ntree=i)
+  a[i] <- accuracy(test_result, predict(randomForest_model, test_data))
+}
 varImpPlot(randomForest_model)
 ```
 

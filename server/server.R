@@ -58,17 +58,11 @@ observeEvent(input$bt_predict, {
     test_case$A_defenceTeamWidthClass = as.numeric(input$A_defenceTeamWidthClass)
     test_case$A_chanceCreationPositioningClass = as.numeric(input$A_chanceCreationPositioningClass)
   }
-  # outcomes <- list()
-  # for(i in 1:100){
-  #   test_case <- randomTestCase()
-  #   print(class(test_case))
-  #   test_case$H_buildUpPlaySpeedClass = 2
-  #   print(class(test_case))
-  #   result <- predictMatch(test_case)
-  #   outcomes[[i]] <- result
-  # }
-  # print(outcomes)
+  print("********************************")
+  print(input$opponent_select)
   result <- predictMatch(test_case)
+  print(result)
+  print("---------------------------------")
   output$predict_result <- renderUI({
                               if(as.character(result) == 'WIN'){
                                 h1('WIN', style='text-align:center;

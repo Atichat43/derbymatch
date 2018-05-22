@@ -1,0 +1,24 @@
+"","away_team_api_id","home_team_api_id","H_overall_rating","A_overall_rating","H_potential","A_potential","H_buildUpPlaySpeedClass","H_buildUpPlayDribblingClass","H_buildUpPlayPassingClass","H_buildUpPlayPositioningClass","H_chanceCreationPassingClass","H_chanceCreationCrossingClass","H_chanceCreationShootingClass","H_chanceCreationPositioningClass","H_defencePressureClass","H_defenceAggressionClass","H_defenceTeamWidthClass","A_buildUpPlaySpeedClass","A_buildUpPlayDribblingClass","A_buildUpPlayPassingClass","A_buildUpPlayPositioningClass","A_chanceCreationPassingClass","A_chanceCreationCrossingClass","A_chanceCreationShootingClass","A_chanceCreationPositioningClass","A_defencePressureClass","A_defenceAggressionClass","A_defenceTeamWidthClass","result"
+"460","10260","Wolverhampton Wanderers",791,819.5939669,863,868.0962077,2,1,2,2,2,2,2,2,2,3,2,2,1,2,2,2,2,3,1,2,3,2,2
+"527","10260","Chelsea",897,819.5939669,965,868.0962077,2,1,2,1,2,2,3,1,2,3,2,2,1,2,2,2,2,3,1,2,3,2,2
+"548","10260","Liverpool",869,819.5939669,932,868.0962077,2,1,2,2,2,2,2,2,2,3,2,2,1,2,2,2,2,3,1,2,3,2,2
+"679","10260","Arsenal",868,893,954,951,3,1,2,1,2,2,2,1,2,3,2,2,1,2,2,2,2,3,1,2,3,2,2
+"1119","10260","Newcastle United",829,896,886,939,2,1,2,2,2,3,2,2,2,3,2,2,1,2,2,2,2,2,2,2,3,2,2
+"1401","10260","Wigan Athletic",788,886,841,936,2,1,2,2,2,2,2,2,2,3,2,2,1,2,2,2,2,2,2,2,3,2,2
+"1466","10260","Manchester City",898,879,943,921,2,1,2,2,2,2,2,1,2,3,2,2,1,2,2,2,2,2,2,2,3,2,2
+"1537","10260","Everton",836,892,866,941,2,1,2,2,2,2,2,2,2,3,2,2,1,2,2,2,2,2,2,2,3,2,2
+"1744","10260","Norwich City",795,872,836,921,2,1,2,2,2,3,2,2,2,3,2,2,1,2,2,2,2,2,2,2,3,2,2
+"922","Manchester City","10260",880,871,947,952,2,1,2,2,2,2,3,1,2,3,2,3,1,2,2,3,2,3,1,2,3,2,3
+"1104","Blackburn Rovers","10260",817.8481077,764,868.4805294,856,2,1,2,2,2,2,3,1,2,3,2,2,1,2,2,2,2,2,2,2,3,2,3
+"1623","Tottenham Hotspur","10260",863,868,911,920,2,1,2,2,2,2,2,2,2,3,2,2,1,2,2,2,2,2,2,2,3,2,3
+"2106","Manchester City","10260",865,887,912,935,2,1,2,2,2,3,2,2,2,3,2,2,1,2,2,2,2,2,1,2,3,2,3
+"2153","Chelsea","10260",862,893,903,927,2,1,2,2,2,3,2,2,2,3,2,2,1,2,2,2,2,2,2,2,3,2,3
+"2253","West Bromwich Albion","10260",869,816,915,859,2,1,2,2,2,3,2,2,2,3,2,2,1,2,2,2,2,2,2,1,1,2,3
+"2341","Everton","10260",866,835,917,880,2,1,2,2,2,3,2,2,2,3,2,2,1,2,2,2,2,1,2,2,3,2,3
+"2347","Newcastle United","10260",847,840,913,906,2,1,2,2,2,3,2,2,2,3,2,2,1,3,2,2,2,2,2,2,3,2,3
+"2390","Tottenham Hotspur","10260",867,855,923,904,2,2,2,2,2,3,2,2,2,3,2,2,2,2,2,2,2,2,2,2,3,2,3
+"2491","Liverpool","10260",866,850,928,904,2,2,2,2,2,3,2,2,2,3,2,3,2,1,2,2,2,2,2,2,3,2,3
+"2504","Manchester City","10260",865,899,911,930,2,2,2,2,2,3,2,2,2,3,2,2,2,1,2,1,2,2,2,2,3,2,3
+"2565","Sunderland","10260",883,797,914,852,2,2,2,2,2,3,2,2,2,3,2,2,1,2,2,2,2,2,2,2,3,2,3
+"2594","Swansea City","10260",833,821,898,849,2,2,2,2,2,3,2,2,2,3,2,2,2,2,2,2,2,2,1,2,3,2,3
+"2811","Southampton","10260",878,813,930,874,2,2,2,2,2,2,2,2,2,3,2,2,1,2,2,2,2,1,2,2,3,2,3

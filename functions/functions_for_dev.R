@@ -1,31 +1,3 @@
-matches <- subset(matches, select = c(season, away_team_api_id, home_team_api_id, 
-                                      H_overall_rating, A_overall_rating, 
-                                      H_potential, A_potential, 
-                                      H_buildUpPlaySpeedClass, 
-                                      H_buildUpPlayDribblingClass,
-                                      H_buildUpPlayPassingClass, 
-                                      H_buildUpPlayPositioningClass, 
-                                      H_chanceCreationPassingClass,
-                                      H_chanceCreationCrossingClass, 
-                                      H_chanceCreationShootingClass, 
-                                      H_chanceCreationPositioningClass,
-                                      H_defencePressureClass, 
-                                      H_defenceAggressionClass, 
-                                      H_defenceTeamWidthClass, 
-                                      A_buildUpPlaySpeedClass,
-                                      A_buildUpPlayDribblingClass, 
-                                      A_buildUpPlayPassingClass, 
-                                      A_buildUpPlayPositioningClass, 
-                                      A_chanceCreationPassingClass,
-                                      A_chanceCreationCrossingClass, 
-                                      A_chanceCreationShootingClass, 
-                                      A_chanceCreationPositioningClass, 
-                                      A_defencePressureClass, 
-                                      A_defenceAggressionClass, 
-                                      A_defenceTeamWidthClass, 
-                                      result
-))
-
 getMatch <- function(team_a_api, team_b_api){
   a <- which(data$home_team_api_id == team_a_api)
   b <- which(data$away_team_api_id == team_b_api)
@@ -44,3 +16,35 @@ accuracy <- function(truth, prediction) {
   new_table <- table(truth, prediction)
   sum(diag(new_table)/sum(new_table))
 }
+
+#function fide lose test case 
+findLoseTestCaseManU <- function(){
+  #dataset
+  a <- which(dataset$away_team_api_id == 10260)
+  h <- which(dataset$home_team_api_id == 10260)
+  temp_a <- dataset[a, ]
+  man_u_lose_a <- which(temp_a$result == 2)
+  temp_h <- dataset[h, ]
+  man_u_lose_h <- which(temp_h$result == 3)
+  a_table <- temp_a[man_u_lose_a, ]
+  h_table <- temp_h[man_u_lose_h, ]
+}
+
+changeNameTeam <- function(){
+  for(r in 1:nrow(a_table)){
+    #get value team_long_name 
+    #a_table$home_team_api_id to find
+    n <- TABLE_TEAM_APINAME$team_long_name[which(TABLE_TEAM_APINAME$team_api_id == a_table$home_team_api_id[r])]
+    a_table$home_team_api_id[r] <- as.character(n)
+  }
+  a_table
+  
+  for(r in 1:nrow(h_table)){
+    #get value team_long_name 
+    #a_table$home_team_api_id to find
+    n <- TABLE_TEAM_APINAME$team_long_name[which(TABLE_TEAM_APINAME$team_api_id == h_table$away_team_api_id[r])]
+    h_table$away_team_api_id[r] <- as.character(n)
+  }
+  h_table
+}
+

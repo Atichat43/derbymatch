@@ -70,6 +70,7 @@ getPlayerStat <- function(team_name, player_api){
 }
 
 getOverallRatingPotential <- function(team_name, player_apis){
+  print(player_apis)
   if(is.null(player_apis) || player_apis == '' || is.null(team_name) || team_name == ''){
     return(NULL)
   }
@@ -81,11 +82,17 @@ getOverallRatingPotential <- function(team_name, player_apis){
   total_overall <- 0
   total_potential <- 0
   for(nr in 1:nrow(player_apis)){
-    if(player_apis[nr] == table_players$player_api_id[nr]){
-      total_overall = total_overall + table_players$overall_rating[nr]
-      total_potential = total_potential + table_players$potential[nr]
+    # loop compare until we find
+    for(nt in 1:nrow(table_players)){
+      if(player_apis[nr] == table_players$player_api_id[nt]){
+          total_overall = total_overall + table_players$overall_rating[nt]
+          total_potential = total_potential + table_players$potential[nt]
+          break
+      }
     }
   }
+  print(paste(total_overall, total_potential))
+  print("---------------")
   return(c(total_overall, total_potential))
 }
 ###############################################################################################################

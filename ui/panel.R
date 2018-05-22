@@ -122,7 +122,8 @@ fluidRow(
                  box(width = NULL, title = "Select 11 players",
                      hr(class='my-4'),
                      uiOutput(outputId = "Awayplayer")
-                 )
+                 ),
+                 h3("5 players")
           )
         )
       ),        
