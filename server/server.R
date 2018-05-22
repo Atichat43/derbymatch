@@ -6,6 +6,9 @@ observeEvent(input$opponent_select, {
   away_team_api_list_check <<- away_team_apis[1:11]
 })
 
+output$number_of_players_home <- renderText({paste("number of player",length(input$HomePlayerGroup))})
+output$number_of_players_away <- renderText({paste("number of player",length(input$AwayPlayerGroup))})
+
 apis <- toStringApiPlayers(getPlayers(HOME_TEAM_NAME))[1:11]
 h_overall_potential <- getOverallRatingPotential(HOME_TEAM_NAME, apis)
 
