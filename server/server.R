@@ -72,23 +72,29 @@ observeEvent(input$bt_predict, {
   print(result)
   print("---------------------------------")
   output$predict_result <- renderUI({
-                              if(as.character(result) == 'WIN'){
-                                h1('WIN', style='text-align:center;
-                                                  background-color: green;
-                                                  color:#fff')
-                              }
-                              else if(as.character(result) == 'DRAW'){
-                                h1('DRAW', style='text-align:center;
-                                                  background-color: gray;')
-                              }
-                              else if(as.character(result) == 'LOSE'){
-                                h1('LOSE', style='text-align:center;
-                                                  background-color: red;')
-                              }
-                              else{
-                                h1('')
-                              }
-                            })
+                                      if(as.character(result) == 'WIN'){
+                                        h1('WIN', style='text-align:center;
+                                           height: 100px;
+                                           background-color: #00CECB;
+                                           padding-top: 30px;
+                                           color:#FFFFEA')
+                                      }
+                                      else if(as.character(result) == 'DRAW'){
+                                        h1('DRAW', style='text-align:center;
+                                           height: 100px;
+                                           background-color: #D8D8D8;
+                                           padding-top: 30px;')
+                                      }
+                                      else if(as.character(result) == 'LOSE'){
+                                        h1('LOSE', style='text-align:center;
+                                           height: 100px;
+                                           background-color: #FF5E5B;
+                                           padding-top: 30px;')
+                                      }
+                                      else{
+                                        h1('')
+                                      }
+                                      })
 })
 
 output$predict_result <- renderUI({
