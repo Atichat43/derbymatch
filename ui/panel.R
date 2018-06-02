@@ -1,6 +1,5 @@
 TEAM_CHOICES <-c("Arsenal" = "Arsenal",
                  "Aston Villa" = "Aston Villa", 	
-                 "Bournemouth" = "Bournemouth", 	
                  "Chelsea" = "Chelsea",
                  "Crystal Palace" = "Crystal Palace", 	
                  "Everton" = "Everton", 	
@@ -14,7 +13,6 @@ TEAM_CHOICES <-c("Arsenal" = "Arsenal",
                  "Sunderland" = "Sunderland", 	
                  "Swansea City" = "Swansea City", 	
                  "Tottenham Hotspur" = "Tottenham Hotspur",
-                 "Watford" = "Watford", 	
                  "West Bromwich Albion" = "West Bromwich Albion", 	
                  "West Ham United" = "West Ham United")
 

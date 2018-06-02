@@ -70,7 +70,6 @@ getPlayerStat <- function(team_name, player_api){
 }
 
 getOverallRatingPotential <- function(team_name, player_apis){
-  print(player_apis)
   if(is.null(player_apis) || player_apis == '' || is.null(team_name) || team_name == ''){
     return(NULL)
   }
@@ -91,8 +90,6 @@ getOverallRatingPotential <- function(team_name, player_apis){
       }
     }
   }
-  print(paste(total_overall, total_potential))
-  print("---------------")
   return(c(total_overall, total_potential))
 }
 ###############################################################################################################

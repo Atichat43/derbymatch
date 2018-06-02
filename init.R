@@ -9,4 +9,5 @@ HOME_TEAM_NAME <- 'Manchester United'
 source('dataconnector.R')
 source('controller.R')
 source(file.path("model", "model.R"))
+Model()
 source(file.path("model", "predictor.R"))

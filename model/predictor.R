@@ -1,18 +1,11 @@
 #Predictor
 LEVELS <- c('DRAW', 'WIN','LOSE') #DRAW 1, #WIN 2, #LOSE 3 
-model <- Model()
+model <- getInstanceModel()
 
 predictMatch <- function(test_case){
-  print(test_case[, 1:2])
-  print(test_case$H_buildUpPlaySpeedClass)
-  print(test_case$H_buildUpPlayDribblingClass)
-  print(test_case[, 3:4])
-  print(test_case$A_buildUpPlaySpeedClass)
-  print(test_case$A_buildUpPlayDribblingClass)
   result <- stats::predict(model, test_case)
   return(LEVELS[as.numeric(result)])
 }
-#test predictMatch
 
 
 tempTestCase <- function(dataset=getDataset()){

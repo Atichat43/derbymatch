@@ -9,7 +9,8 @@ test_that("trainModel: class(model)", {
 
 #test class of model is svm from Model function
 test_that("Model: class(model)", {
-  model <- Model()
+  Model()
+  model <- getInstanceModel()
   c <- class(model)
   expect_that(c[1], is_identical_to("svm.formula"))
   expect_that(c[2], is_identical_to("svm"))

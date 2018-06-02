@@ -4,6 +4,7 @@
 observeEvent(input$opponent_select, {
   away_team_apis <- toStringApiPlayers(getPlayers(input$opponent_select))
   away_team_api_list_check <<- away_team_apis[1:11]
+  output$predict_result <- renderUI({ h3('Cicked Button', style='text-align:center;')})
 })
 
 output$number_of_players_home <- renderText({paste("number of player",length(input$HomePlayerGroup))})
@@ -66,11 +67,7 @@ observeEvent(input$bt_predict, {
     test_case$A_defenceTeamWidthClass = as.numeric(input$A_defenceTeamWidthClass)
     test_case$A_chanceCreationPositioningClass = as.numeric(input$A_chanceCreationPositioningClass)
   }
-  print("********************************")
-  print(input$opponent_select)
   result <- predictMatch(test_case)
-  print(result)
-  print("---------------------------------")
   output$predict_result <- renderUI({
                                       if(as.character(result) == 'WIN'){
                                         h1('WIN', style='text-align:center;
